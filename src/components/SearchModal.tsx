@@ -1,3 +1,4 @@
+import { AnimatePresence } from 'framer-motion';
 import ModalWindow from './ui/ModalWindow';
 
 interface SearchModalProps {
@@ -9,13 +10,13 @@ export default function SearchModal({
   modalIsOpened,
   setModalIsOpened,
 }: SearchModalProps) {
-  if (!modalIsOpened) {
-    return;
-  }
-
   return (
-    <ModalWindow clickOnClose={setModalIsOpened}>
-      This is modal window
-    </ModalWindow>
+    <AnimatePresence>
+      {modalIsOpened && (
+        <ModalWindow clickOnClose={setModalIsOpened}>
+          This is modal window
+        </ModalWindow>
+      )}
+    </AnimatePresence>
   );
 }
