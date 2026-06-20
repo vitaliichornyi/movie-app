@@ -1,3 +1,9 @@
+import Breadcrumbs from '@/src/components/ui/Breadcrumbs';
+
 export default function Movies() {
-  return <>Movies</>;
+  return (
+    <main>
+      <Breadcrumbs />
+    </main>
+  );
 }

@@ -1,3 +1,5 @@
+import Breadcrumbs from '@/src/components/ui/Breadcrumbs';
+
 interface TVPageProps {
   params: Promise<{ id: string }>;
 }
@@ -5,5 +7,9 @@ interface TVPageProps {
 export default async function TVPage({ params }: TVPageProps) {
   const { id } = await params;
 
-  return <>TV ID: {id}</>;
+  return (
+    <main>
+      <Breadcrumbs dynamicTitle="Title" />
+    </main>
+  );
 }
