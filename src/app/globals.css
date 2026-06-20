@@ -13,9 +13,23 @@
   --secondary-hover: rgba(255, 255, 255, 0.16);
   --on-secondary: #ffffff;
 
-  --hover-transition: background 0.2s ease-in-out;
+  --overlay: rgba(22, 22, 22, 0.6);
+}
 
-  --radius-sm: 8px;
+@theme inline {
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-on-secondary: var(--on-secondary);
+
+  --color-overlay: var(--overlay);
 }
 
 body {
