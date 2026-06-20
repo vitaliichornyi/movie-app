@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import Image from 'next/image';
 import SearchButton from './ui/SearchButton';
 
 export default function Header() {
@@ -5,16 +7,23 @@ export default function Header() {
     <header className="w-full">
       <div className="px-4 h-16 flex item-center justify-between">
         <div className="flex items-center gap-6">
-          <a href="/">
-            <img src="logo.svg" alt="Movie" />
-          </a>
+          <Link href="/">
+            <Image
+              src="/logo.svg"
+              alt="Movie Logo"
+              width={122}
+              height={34}
+              priority
+            />
+          </Link>
+
           <nav>
             <ul className="flex gap-4">
               <li>
-                <a href="/movies">Movies</a>
+                <Link href="/movies">Movies</Link>
               </li>
               <li>
-                <a href="/tv">TV Shows</a>
+                <Link href="/tv">TV Shows</Link>
               </li>
             </ul>
           </nav>
