@@ -2,14 +2,15 @@
 
 export default async function getMovieDetailsById(id: string) {
   try {
-    if (!id.trim()) {
+    if (!id) {
       return {
         data: null,
         error: 'Movie ID is required and cannot be empty.',
       };
     }
-    const apiKey = process.env.TMDB_API_KEY;
+    const cleanId = id.trim();
 
+    const apiKey = process.env.TMDB_API_KEY;
     if (!apiKey) {
       return {
         data: null,
@@ -17,8 +18,7 @@ export default async function getMovieDetailsById(id: string) {
       };
     }
 
-    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US`;
-
+    const url = `https://api.themoviedb.org/3/movie/${cleanId}?api_key=${apiKey}&language=en-US`;
     const response = await fetch(url);
 
     if (!response.ok) {
