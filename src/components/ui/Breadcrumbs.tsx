@@ -7,11 +7,6 @@ interface BreadcrumbsProps {
   dynamicTitle?: string;
 }
 
-const returnLabels: Record<string, string> = {
-  movies: 'Movies',
-  tv: 'Shows',
-};
-
 export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
   const pathname = usePathname();
   const segments = pathname.split('/').filter(Boolean);
@@ -29,9 +24,9 @@ export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
           const label =
             isLast && dynamicTitle
               ? dynamicTitle
-              : returnLabels[segment] ||
-                segment.charAt(0).toUpperCase() + segment.slice(1);
+              : segment.charAt(0).toUpperCase() + segment.slice(1);
 
+          console.log(label);
           return (
             <li className="flex items-center gap-1" key={href}>
               <span>/</span>

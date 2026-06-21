@@ -1,4 +1,5 @@
 import Breadcrumbs from '@/src/components/ui/Breadcrumbs';
+import getMovieDetailsById from '@/src/services/getMovieDetailsById';
 
 interface MoviePageProps {
   params: Promise<{ id: string }>;
@@ -6,10 +7,14 @@ interface MoviePageProps {
 
 export default async function MoviePage({ params }: MoviePageProps) {
   const { id } = await params;
+  const { data, error } = await getMovieDetailsById(id);
 
-  return (
-    <main>
-      <Breadcrumbs dynamicTitle="Title" />
-    </main>
+  console.log(data);
+  return error ? (
+    <div>{error}</div>
+  ) : (
+    <div>
+      <Breadcrumbs dynamicTitle={data.original_title} />
+    </div>
   );
 }
