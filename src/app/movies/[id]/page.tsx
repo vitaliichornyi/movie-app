@@ -10,11 +10,18 @@ export default async function MoviePage({ params }: MoviePageProps) {
   const { data, error } = await getMovieDetailsById(id);
 
   console.log(data);
-  return error ? (
-    <div>{error}</div>
-  ) : (
-    <div>
-      <Breadcrumbs dynamicTitle={data.original_title} />
-    </div>
+  return (
+    <main>
+      {error ? (
+        <div>{error}</div>
+      ) : (
+        <div>
+          <Breadcrumbs dynamicTitle={data.original_title} />
+          <article>
+            <h1>{data.original_title}</h1>
+          </article>
+        </div>
+      )}
+    </main>
   );
 }

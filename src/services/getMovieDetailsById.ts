@@ -18,7 +18,7 @@ export default async function getMovieDetailsById(id: string) {
       };
     }
 
-    const url = `https://api.themoviedb.org/3/movie/${cleanId}?api_key=${apiKey}&language=en-US`;
+    const url = `https://api.themoviedb.org/3/movie/${cleanId}?api_key=${apiKey}&language=en-US&append_to_response=credits,reviews`;
     const response = await fetch(url);
 
     if (!response.ok) {
