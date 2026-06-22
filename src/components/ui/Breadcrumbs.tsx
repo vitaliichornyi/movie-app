@@ -26,7 +26,6 @@ export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
               ? dynamicTitle
               : segment.charAt(0).toUpperCase() + segment.slice(1);
 
-          console.log(label);
           return (
             <li className="flex items-center gap-1" key={href}>
               <span>/</span>
