@@ -5,7 +5,7 @@ import SearchButton from './ui/SearchButton';
 export default function Header() {
   return (
     <header className="w-full">
-      <div className="px-4 h-16 flex item-center justify-between">
+      <div className="h-16 flex item-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/">
             <Image
