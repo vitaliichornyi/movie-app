@@ -5,6 +5,8 @@
   --on-surface: #ffffff;
   --on-surface-variant: rgba(255, 255, 255, 0.32);
 
+  --surface-container: #1d1d1d;
+
   --primary: #169ddb;
   --primary-hover: #2caef2;
   --on-primary: #ffffff;
@@ -20,6 +22,8 @@
   --color-surface: var(--surface);
   --color-on-surface: var(--on-surface);
   --color-on-surface-variant: var(--on-surface-variant);
+
+  --color-surface-container: var(--surface-container);
 
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
@@ -37,4 +41,12 @@ body {
 
   background-color: var(--surface);
   color: var(--on-surface);
+}
+
+h1 {
+  font-size: 2.4rem;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -3%;
+  padding: 8px 0 24px 0;
 }
