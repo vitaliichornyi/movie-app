@@ -17,7 +17,11 @@ export async function GET(request: NextRequest) {
     sort_by: searchParams.get('sort_by') || undefined,
   };
 
-  const result = await getMovies(params);
+  const response = await getMovies(params);
 
-  return NextResponse.json(result);
+  if (response.error) {
+    return NextResponse.json({ error: response.error }, { status: 500 });
+  }
+
+  return NextResponse.json(response.data);
 }
