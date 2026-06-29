@@ -10,7 +10,7 @@ export default function SearchButton() {
   return (
     <>
       <button
-        className="flex items-center gap-2 w-52 h-10 px-2 rounded-lg text-on-secondary bg-secondary hover:bg-secondary-hover transition cursor-pointer"
+        className="flex items-center gap-2 w-52 h-10 px-2 rounded-xl text-on-secondary bg-secondary hover:bg-secondary-hover transition cursor-pointer"
         onClick={() => setModalIsOpened(!modalIsOpened)}
       >
         <SearchIcon />

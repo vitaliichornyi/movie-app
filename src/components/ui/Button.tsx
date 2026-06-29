@@ -9,7 +9,7 @@ interface ButtonProps {
 }
 
 const sizeStyles = {
-  sm: 'rounded-lg h-10 px-3',
+  sm: 'rounded-xl h-10 px-3',
   lg: 'rounded-2xl h-14 px-6',
 };
 
