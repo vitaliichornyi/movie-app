@@ -1,15 +1,8 @@
 'use server';
 
-interface DiscoverMovieParams {
-  with_genres?: string;
-  with_origin_country?: string;
-  primary_release_year?: string;
-  vote_average?: number;
-  page?: number;
-  sort_by?: string;
-}
+import { DiscoverMovieProps } from '../components/types/type';
 
-export default async function getMovies(queryParams: DiscoverMovieParams) {
+export default async function getMovies(queryParams: DiscoverMovieProps) {
   try {
     const apiKey = process.env.TMDB_API_KEY;
     if (!apiKey) {
