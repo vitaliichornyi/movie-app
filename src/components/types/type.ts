@@ -7,8 +7,9 @@ export interface DiscoverMovieProps {
   sort_by?: string;
 }
 
-interface Movie {
+export interface Movie {
   id: number;
   title: string;
   poster_path: string;
+  backdrop_path: string;
 }

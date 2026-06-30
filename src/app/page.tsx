@@ -1,5 +1,5 @@
-import Image from 'next/image';
+import HeroSlider from '../components/HeroSlider';
 
 export default function Home() {
-  return <>Home Page</>;
+  return <HeroSlider slug="hero-slider" />;
 }
