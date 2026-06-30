@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.className} antialiased`}>
-      <body className="px-6 md:px-12">
+      <body>
         <Header />
         <Providers>{children}</Providers>
         <Footer />

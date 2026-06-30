@@ -78,7 +78,7 @@ export default function Movies() {
   const emptyResponse = !hasMovie && !isError && !isFirstLoading;
 
   return (
-    <main className="py-4">
+    <main className="py-4 px-6 md:px-12">
       <Breadcrumbs />
 
       <FilterBar filters={filters} onFilterChange={updateFilter} />
