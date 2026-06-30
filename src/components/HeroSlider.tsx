@@ -38,7 +38,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
       {data && data.length === 0 && <StatusMessage type="empty" />}
       {data && data.length > 0 && (
         <Swiper
-          className="w-full h-140"
+          className="w-full h-140 [&_.swiper-slide]:opacity-40 [&_.swiper-slide]:transition-opacity [&_.swiper-slide-active]:opacity-100"
           style={
             {
               paddingBottom: '40px',
@@ -58,7 +58,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
           {data.map((slide: Movie) => (
             <SwiperSlide
               key={slide.id}
-              className="w-full h-full max-w-100 md:max-w-180 lg:max-w-240 flex"
+              className={`w-full h-full max-w-100 md:max-w-180 lg:max-w-240 flex`}
             >
               <img
                 className="h-full w-full object-cover rounded-2xl"
