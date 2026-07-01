@@ -14,7 +14,7 @@ import HeroSliderSkeleton from './skeletons/HeroSliderSkeleton';
 import StatusMessage from './ui/StatusMessage';
 
 async function fetchSlider(slug: string) {
-  const response = await fetch(`/api/slider/${slug}`);
+  const response = await fetch(`/api/collections/${slug}`);
 
   if (!response.ok) {
     const errorData = await response.json();

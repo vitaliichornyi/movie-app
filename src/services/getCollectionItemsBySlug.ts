@@ -2,18 +2,18 @@
 
 import { createClient } from '../utils/supabase/server';
 
-export default async function getSliderBySlug(slug: string) {
+export default async function getCollectionItemsBySlug(slug: string) {
   try {
     const supabase = await createClient();
 
     const { data: slider, error } = await supabase
-      .from('sliders')
+      .from('collections')
       .select(
         `title,
-        slider_items ( tmdb_id )`,
+        collection_items ( tmdb_id )`,
       )
       .eq('slug', slug)
-      .order('position', { foreignTable: 'slider_items', ascending: true })
+      .order('position', { foreignTable: 'collection_items', ascending: true })
       .single();
 
     if (error || !slider) {
@@ -25,7 +25,7 @@ export default async function getSliderBySlug(slug: string) {
       return { data: null, error: 'API_KEY is not configured on the server.' };
     }
 
-    const tmdbIds = slider.slider_items.map((item) => item.tmdb_id);
+    const tmdbIds = slider.collection_items.map((item) => item.tmdb_id);
 
     if (tmdbIds.length === 0) {
       return { data: [], error: null };
