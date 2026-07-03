@@ -17,11 +17,11 @@ export async function GET(request: NextRequest) {
     sort_by: searchParams.get('sort_by') || undefined,
   };
 
-  const response = await getMovies(params);
+  const { data, error } = await getMovies(params);
 
-  if (response.error) {
-    return NextResponse.json({ error: response.error }, { status: 500 });
+  if (error) {
+    return NextResponse.json({ error }, { status: 500 });
   }
 
-  return NextResponse.json(response.data);
+  return NextResponse.json({ data });
 }

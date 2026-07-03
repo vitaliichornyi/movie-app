@@ -8,12 +8,18 @@ import MoviesSkeleton from '@/src/components/skeletons/MoviesSkeleton';
 import StatusMessage from '@/src/components/ui/StatusMessage';
 import Button from '@/src/components/ui/Button';
 
-import { DiscoverMovieProps } from '@/src/components/types/type';
+import {
+  GetMoviesParams,
+  GetMoviesResponse,
+} from '@/src/components/types/movies';
 
 import Image from 'next/image';
 import Link from 'next/link';
 
-async function fetchMovies(page: any, filters: DiscoverMovieProps) {
+async function fetchMovies(
+  page: any,
+  filters: GetMoviesParams,
+): Promise<GetMoviesResponse> {
   const searchParams = new URLSearchParams(filters as Record<string, string>);
   searchParams.append('page', page);
 
@@ -23,7 +29,9 @@ async function fetchMovies(page: any, filters: DiscoverMovieProps) {
     const errorData = await response.json();
     throw new Error(errorData.error || 'Unknown error');
   }
-  const data = await response.json();
+  const { data } = await response.json();
+
+  console.log(data);
   return data;
 }
 
@@ -31,41 +39,34 @@ export default function Movies() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const filters = Object.fromEntries(
-    searchParams.entries(),
-  ) as DiscoverMovieProps;
+  const filters = Object.fromEntries(searchParams.entries()) as GetMoviesParams;
 
-  const updateFilter = (key: keyof DiscoverMovieProps, value: string) => {
+  const updateFilter = (key: keyof GetMoviesParams, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (value) {
       params.set(key, value);
     } else {
       params.delete(key);
     }
+    params.delete('page');
     router.push(`/movies?${params.toString()}`);
   };
 
-  const {
-    data,
-    status,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['movies', filters],
-    queryFn: ({ pageParam }) => fetchMovies(pageParam, filters),
-    initialPageParam: 1,
+  const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['movies', filters],
+      queryFn: ({ pageParam }) => fetchMovies(pageParam, filters),
+      initialPageParam: 1,
 
-    getNextPageParam: (lastPage, allPages) => {
-      const currentPage = allPages.length;
-      if (currentPage < lastPage.totalPages) {
-        return currentPage + 1;
-      }
-    },
-  });
+      getNextPageParam: (lastPage) => {
+        if (lastPage.page < lastPage.total_pages) {
+          return lastPage.page + 1;
+        }
+        return undefined;
+      },
+    });
 
-  const rawMovies = data?.pages.flatMap((page) => page.movies) || [];
+  const rawMovies = data?.pages.flatMap((page) => page.results) || [];
 
   const allMovies = rawMovies.filter(
     (movie, index, self) =>

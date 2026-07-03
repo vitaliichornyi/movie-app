@@ -15,7 +15,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
       {error ? (
         <div>{error}</div>
       ) : (
-        <div>
+        <div className="layout-wrap">
           <Breadcrumbs dynamicTitle={data.original_title} />
           <article>
             <h1>{data.original_title}</h1>

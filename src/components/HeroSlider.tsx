@@ -1,10 +1,10 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 
-import { Movie } from './types/type';
+import { CollectionItemsResult } from './types/collections';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -13,7 +13,7 @@ import 'swiper/css/autoplay';
 import HeroSliderSkeleton from './skeletons/HeroSliderSkeleton';
 import StatusMessage from './ui/StatusMessage';
 
-async function fetchSlider(slug: string) {
+async function fetchCollection(slug: string): Promise<CollectionItemsResult> {
   const response = await fetch(`/api/collections/${slug}`);
 
   if (!response.ok) {
@@ -28,15 +28,19 @@ async function fetchSlider(slug: string) {
 export default function HeroSlider({ slug }: { slug: string }) {
   const { data, isLoading, error } = useQuery({
     queryKey: ['hero-slider', slug],
-    queryFn: () => fetchSlider(slug),
+    queryFn: () => fetchCollection(slug),
   });
+
+  const collections = data?.data || [];
+  const hasData = collections && collections.length > 0;
+  const isReady = !isLoading && !error;
 
   return (
     <div>
       {isLoading && <HeroSliderSkeleton />}
       {error && <StatusMessage type="error" />}
-      {data && data.length === 0 && <StatusMessage type="empty" />}
-      {data && data.length > 0 && (
+      {isReady && !hasData && <StatusMessage type="empty" />}
+      {isReady && hasData && (
         <Swiper
           className="w-full h-140 [&_.swiper-slide]:opacity-40 [&_.swiper-slide]:transition-opacity [&_.swiper-slide-active]:opacity-100"
           style={
@@ -55,7 +59,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
           pagination={{ clickable: true }}
           autoplay={{ delay: 5000, disableOnInteraction: true }}
         >
-          {data.map((slide: Movie) => (
+          {collections.map((slide) => (
             <SwiperSlide
               key={slide.id}
               className={`w-full h-full max-w-100 md:max-w-180 lg:max-w-240 flex`}

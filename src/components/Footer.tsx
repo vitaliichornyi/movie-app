@@ -44,7 +44,7 @@ const footerNav = [
 
 export default function Footer() {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 px-6 md:px-12 pb-32">
+    <div className="layout-wrap grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 pb-32 pt-24">
       {footerNav.map((item) => (
         <FooterNav title={item.title} links={item.links} key={item.id} />
       ))}

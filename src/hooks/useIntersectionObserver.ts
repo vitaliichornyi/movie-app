@@ -26,7 +26,7 @@ export default function useIntersectionObserver(onIntersect: () => void) {
     return () => {
       observer.unobserve(currentTrigger);
     };
-  });
+  }, [triggerRef]);
 
   return [triggerRef] as const;
 }

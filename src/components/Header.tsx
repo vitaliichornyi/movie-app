@@ -6,7 +6,7 @@ import Nav from './ui/Nav';
 
 export default function Header() {
   return (
-    <header className="relative md:sticky px-6 md:px-12 top-0 left-0 w-full z-10 bg-surface/80 backdrop-blur-md">
+    <header className="layout-wrap relative md:sticky top-0 left-0 w-full z-10 bg-surface/80 backdrop-blur-md">
       <div className="flex justify-between h-18">
         <div className="flex items-center gap-6">
           <Link href="/">

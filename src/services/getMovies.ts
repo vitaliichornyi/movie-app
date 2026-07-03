@@ -1,8 +1,8 @@
-'use server';
+import { GetMoviesParams, GetMoviesResult } from '../components/types/movies';
 
-import { DiscoverMovieProps } from '../components/types/type';
-
-export default async function getMovies(queryParams: DiscoverMovieProps) {
+export default async function getMovies(
+  queryParams: GetMoviesParams,
+): Promise<GetMoviesResult> {
   try {
     const apiKey = process.env.TMDB_API_KEY;
     if (!apiKey) {
@@ -50,7 +50,12 @@ export default async function getMovies(queryParams: DiscoverMovieProps) {
     const data = await response.json();
 
     return {
-      data: { movies: data.results, totalPages: data.total_pages },
+      data: {
+        page: data.page,
+        results: data.results,
+        total_results: data.total_results,
+        total_pages: data.total_pages,
+      },
       error: null,
     };
   } catch (error) {
@@ -59,3 +64,8 @@ export default async function getMovies(queryParams: DiscoverMovieProps) {
     return { data: null, error: errorMessage };
   }
 }
+
+// page: number;
+//   results: Movie[];
+//   total_results: number;
+//   total_pages: number;
