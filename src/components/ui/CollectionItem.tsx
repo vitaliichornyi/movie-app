@@ -16,6 +16,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
+import PosterImage from './PosterImage';
 
 async function fetchCollectionItems(
   slug: string,
@@ -96,26 +97,13 @@ export default function CollectionItem({
           >
             {collectionItems.map((collectionItem, index) => (
               <SwiperSlide key={collectionItem.id}>
-                <Link href={`/movies/${collectionItem.id}`}>
-                  {collectionItem.poster_path ? (
-                    <Image
-                      className="rounded-2xl"
-                      src={`https://image.tmdb.org/t/p/w500${collectionItem.poster_path}`}
-                      alt={collectionItem.title}
-                      width={500}
-                      height={750}
-                      priority={index < 10}
-                    />
-                  ) : (
-                    <Image
-                      className="rounded-2xl"
-                      src="/no-poster.jpg"
-                      alt={collectionItem.title}
-                      width={500}
-                      height={750}
-                    />
-                  )}
-                </Link>
+                <PosterImage
+                  index={index}
+                  id={collectionItem.id}
+                  title={collectionItem.title}
+                  poster_path={collectionItem.poster_path}
+                  width={185}
+                />
               </SwiperSlide>
             ))}
             {isFetchingNextPage && (

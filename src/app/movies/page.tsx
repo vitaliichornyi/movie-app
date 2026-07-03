@@ -7,14 +7,12 @@ import FilterBar from '@/src/components/FilterBar';
 import MoviesSkeleton from '@/src/components/skeletons/MoviesSkeleton';
 import StatusMessage from '@/src/components/ui/StatusMessage';
 import Button from '@/src/components/ui/Button';
+import PosterImage from '@/src/components/ui/PosterImage';
 
 import {
   GetMoviesParams,
   GetMoviesResponse,
 } from '@/src/components/types/movies';
-
-import Image from 'next/image';
-import Link from 'next/link';
 
 async function fetchMovies(
   page: any,
@@ -90,30 +88,16 @@ export default function Movies() {
         {emptyResponse && <StatusMessage type="empty" />}
         {hasMovie && (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {allMovies.map((movie, index) => (
-                <div key={movie.id}>
-                  <Link href={`/movies/${movie.id}`}>
-                    {movie.poster_path ? (
-                      <Image
-                        className="rounded-2xl"
-                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                        alt={movie.title}
-                        width={500}
-                        height={750}
-                        priority={index < 10}
-                      />
-                    ) : (
-                      <Image
-                        className="rounded-2xl"
-                        src="/no-poster.jpg"
-                        alt={movie.title}
-                        width={500}
-                        height={750}
-                      />
-                    )}
-                  </Link>
-                </div>
+                <PosterImage
+                  key={movie.id}
+                  index={index}
+                  id={movie.id}
+                  title={movie.title}
+                  poster_path={movie.poster_path}
+                  width={342}
+                />
               ))}
             </div>
             <div className="my-6">
