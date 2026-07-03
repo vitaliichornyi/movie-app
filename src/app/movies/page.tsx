@@ -1,6 +1,7 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import useIntersectionObserver from '@/src/hooks/useIntersectionObserver';
 
 import Breadcrumbs from '@/src/components/ui/Breadcrumbs';
 import FilterBar from '@/src/components/FilterBar';
@@ -29,7 +30,6 @@ async function fetchMovies(
   }
   const { data } = await response.json();
 
-  console.log(data);
   return data;
 }
 
@@ -49,6 +49,11 @@ export default function Movies() {
     params.delete('page');
     router.push(`/movies?${params.toString()}`);
   };
+
+  const [triggerRef] = useIntersectionObserver(() => {
+    console.log('first');
+    fetchNextPage();
+  });
 
   const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
@@ -79,9 +84,7 @@ export default function Movies() {
   return (
     <main className="py-4 px-6 md:px-12">
       <Breadcrumbs />
-
       <FilterBar filters={filters} onFilterChange={updateFilter} />
-
       <section>
         {isFirstLoading && <MoviesSkeleton />}
         {isError && <StatusMessage type="error" />}
@@ -100,7 +103,7 @@ export default function Movies() {
                 />
               ))}
             </div>
-            <div className="my-6">
+            <div ref={triggerRef} className="my-6">
               <Button
                 type="secondary"
                 size="lg"

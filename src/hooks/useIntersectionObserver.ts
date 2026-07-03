@@ -1,32 +1,29 @@
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef, useCallback } from 'react'; // 1. Добавляем useCallback
 
 export default function useIntersectionObserver(onIntersect: () => void) {
-  const triggerRef = useRef<HTMLDivElement | null>(null);
   const callbackRef = useRef(onIntersect);
-
   useEffect(() => {
     callbackRef.current = onIntersect;
   }, [onIntersect]);
 
-  useEffect(() => {
-    const currentTrigger = triggerRef.current;
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-    if (!currentTrigger) {
-      return;
+  const triggerRef = useCallback((node: HTMLDivElement | null) => {
+    if (observerRef.current) {
+      observerRef.current.disconnect();
     }
 
-    const observer = new IntersectionObserver((entries) => {
+    if (!node) return;
+
+    observerRef.current = new IntersectionObserver((entries) => {
       const [entry] = entries;
       if (entry.isIntersecting) {
         callbackRef.current();
       }
     });
-    observer.observe(currentTrigger);
 
-    return () => {
-      observer.unobserve(currentTrigger);
-    };
-  }, [triggerRef]);
+    observerRef.current.observe(node);
+  }, []);
 
   return [triggerRef] as const;
 }
