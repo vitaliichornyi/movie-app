@@ -7,9 +7,6 @@ import { CollectionItemsPageResult } from '../types/collections';
 import CollectionSliderSkeleton from '../skeletons/CollectionSliderSkeleton';
 import StatusMessage from './StatusMessage';
 
-import Image from 'next/image';
-import Link from 'next/link';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
