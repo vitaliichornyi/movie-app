@@ -6,14 +6,14 @@ import { CollectionItemsPageResult } from '../types/collections';
 
 import CollectionSliderSkeleton from '../skeletons/CollectionSliderSkeleton';
 import StatusMessage from './StatusMessage';
+import PosterImage from './PosterImage';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
+import { Pagination, Autoplay, FreeMode } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
-import PosterImage from './PosterImage';
 
 async function fetchCollectionItems(
   slug: string,
@@ -81,6 +81,8 @@ export default function CollectionItem({
         <div>
           <Swiper
             className="flex-1 min-w-0"
+            modules={[FreeMode]}
+            freeMode={true}
             slidesPerView={3}
             spaceBetween={16}
             breakpoints={{
