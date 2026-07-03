@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import SelectInput from './ui/SelectInput';
 
-import { DiscoverMovieProps } from './types/type';
+import { GetMoviesParams } from './types/movies';
 
 interface SelectorConfig {
-  id: keyof DiscoverMovieProps;
+  id: keyof GetMoviesParams;
   label: string;
   options: { value: string; label: string }[];
 }
@@ -79,16 +79,16 @@ export const selectorConfig: SelectorConfig[] = [
 ];
 
 interface FilterBarProps {
-  filters: DiscoverMovieProps;
-  onFilterChange: (key: keyof DiscoverMovieProps, value: string) => void;
+  filters: GetMoviesParams;
+  onFilterChange: (key: keyof GetMoviesParams, value: string) => void;
 }
 
 export default function FilterBar({ filters, onFilterChange }: FilterBarProps) {
   const [activeSelectId, setActiveSelectId] = useState<
-    keyof DiscoverMovieProps | null
+    keyof GetMoviesParams | null
   >(null);
 
-  function onToggle(clickedId: keyof DiscoverMovieProps) {
+  function onToggle(clickedId: keyof GetMoviesParams) {
     setActiveSelectId((prevId) => (prevId === clickedId ? null : clickedId));
   }
 

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-import { DiscoverMovieProps } from '../types/type';
+import { GetMoviesParams } from '../types/movies';
 
 interface SelectOption {
   value: string;
@@ -8,12 +8,12 @@ interface SelectOption {
 }
 
 interface SelectInputProps {
-  id: keyof DiscoverMovieProps;
+  id: keyof GetMoviesParams;
   label: string;
   selectedValue?: string;
   options: SelectOption[];
-  onSelect: (key: keyof DiscoverMovieProps, value: string) => void;
-  isActive: keyof DiscoverMovieProps | null;
+  onSelect: (key: keyof GetMoviesParams, value: string) => void;
+  isActive: keyof GetMoviesParams | null;
   setIsActive: () => void;
 }
 
