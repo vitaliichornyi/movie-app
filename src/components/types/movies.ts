@@ -25,3 +25,8 @@ export interface GetMoviesResult {
   data: GetMoviesResponse | null;
   error: string | null;
 }
+
+export interface GetMovieDetailsResponse {
+  data: Movie | null;
+  error: string | null;
+}

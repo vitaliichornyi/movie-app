@@ -1,6 +1,8 @@
-'use server';
+import { GetMovieDetailsResponse } from '../components/types/movies';
 
-export default async function getMovieDetailsById(id: string) {
+export default async function getMovieDetailsById(
+  id: string,
+): Promise<GetMovieDetailsResponse> {
   try {
     const apiKey = process.env.TMDB_API_KEY;
     if (!apiKey) {
