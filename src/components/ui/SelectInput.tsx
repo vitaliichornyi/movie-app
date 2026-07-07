@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-import { GetMoviesParams } from '../types/movies';
+import { GetMoviesParams } from '@/src/types/movies';
 
 interface SelectOption {
   value: string;

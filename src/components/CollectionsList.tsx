@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { GetCollectionsResult } from './types/collections';
+import { GetCollectionsResult } from '@/src/types/collections';
 
 import CollectionItem from './ui/CollectionItem';
 import StatusMessage from './ui/StatusMessage';

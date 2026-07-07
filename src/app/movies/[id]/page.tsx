@@ -3,7 +3,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { GetMovieDetailsResponse } from '@/src/components/types/movies';
+import { GetMovieDetailsResponse } from '@/src/types/movies';
 
 import Breadcrumbs from '@/src/components/ui/Breadcrumbs';
 import LoadingContainer from '@/src/components/ui/LoadingContainer';

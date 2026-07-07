@@ -1,7 +1,7 @@
 export default function HeroSliderSkeleton() {
   const placeholders = Array.from({ length: 3 });
   return (
-    <div className="w-full h-140 flex justify-center gap-[24px] overflow-hidden pb-[40px] select-none">
+    <div className="w-full h-140 flex justify-center gap-6 overflow-hidden pb-10 select-none">
       {placeholders.map((_, index) => (
         <div
           key={index}

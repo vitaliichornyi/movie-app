@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import useIntersectionObserver from '@/src/hooks/useIntersectionObserver';
 
-import { CollectionItemsPageResult } from '../types/collections';
+import { CollectionItemsPageResult } from '@/src/types/collections';
 
 import CollectionSliderSkeleton from '../skeletons/CollectionSliderSkeleton';
 import StatusMessage from './StatusMessage';
@@ -107,7 +107,7 @@ export default function CollectionItem({
             ))}
             {isFetchingNextPage && (
               <SwiperSlide>
-                <div className="flex items-center justify-center w-full aspect-[2/3] rounded-2xl">
+                <div className="flex items-center justify-center w-full aspect-2/3 rounded-2xl">
                   <div className="animate-spin h-5 w-5 rounded-full border-2 border-current border-t-transparent" />
                 </div>
               </SwiperSlide>

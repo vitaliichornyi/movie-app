@@ -1,7 +1,7 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 
-import { CollectionItemsResult } from './types/collections';
+import { CollectionItemsResult } from '@/src/types/collections';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';

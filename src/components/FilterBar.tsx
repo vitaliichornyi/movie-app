@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import SelectInput from './ui/SelectInput';
 
-import { GetMoviesParams } from './types/movies';
+import { GetMoviesParams } from '@/src/types/movies';
 
 interface SelectorConfig {
   id: keyof GetMoviesParams;

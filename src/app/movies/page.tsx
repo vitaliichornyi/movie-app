@@ -10,10 +10,7 @@ import StatusMessage from '@/src/components/ui/StatusMessage';
 import Button from '@/src/components/ui/Button';
 import PosterImage from '@/src/components/ui/PosterImage';
 
-import {
-  GetMoviesParams,
-  GetMoviesResponse,
-} from '@/src/components/types/movies';
+import { GetMoviesParams, GetMoviesResponse } from '@/src/types/movies';
 
 async function fetchMovies(
   page: any,

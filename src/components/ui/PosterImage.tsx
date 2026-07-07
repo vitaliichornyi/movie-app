@@ -22,7 +22,7 @@ export default function PosterImage({
   return (
     <Link href={`/movies/${id}`}>
       <Image
-        className="h-auto w-full aspect-[2/3] object-cover rounded-2xl"
+        className="h-auto w-full aspect-2/3 object-cover rounded-2xl"
         src={
           poster_path
             ? `https://image.tmdb.org/t/p/w${width}${poster_path}`

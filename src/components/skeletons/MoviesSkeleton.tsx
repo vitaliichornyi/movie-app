@@ -5,7 +5,7 @@ export default function MoviesSkeleton() {
       {placeholders.map((placeholder, index) => (
         <div
           key={index}
-          className="animate-pulse aspect-[2/3] rounded-2xl bg-surface-container"
+          className="animate-pulse aspect-2/3 rounded-2xl bg-surface-container"
         ></div>
       ))}
     </div>

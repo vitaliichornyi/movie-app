@@ -12,7 +12,7 @@ export default function CollectionSliderSkeleton() {
     >
       {placeholders.map((_, index) => (
         <div
-          className="w-full aspect-[2/3] rounded-2xl animate-pulse bg-surface-container shrink-0"
+          className="w-full aspect-2/3 rounded-2xl animate-pulse bg-surface-container shrink-0"
           key={index}
         ></div>
       ))}
