@@ -1,8 +1,11 @@
+import React from 'react';
+
 interface ButtonProps {
-  type: 'primary' | 'secondary';
-  size: 'sm' | 'lg';
-  maxWidth?: boolean;
   children: React.ReactNode;
+  type: 'primary' | 'secondary';
+  size: 'sm' | 'lg' | 'md';
+  maxWidth?: boolean;
+  rounded?: boolean;
   onClick?: () => void;
   isLoading?: boolean;
   isDisabled?: boolean;
@@ -10,6 +13,7 @@ interface ButtonProps {
 
 const sizeStyles = {
   sm: 'rounded-xl h-10 px-3',
+  md: 'rounded-2xl h-12 px-4',
   lg: 'rounded-2xl h-14 px-6',
 };
 
@@ -20,17 +24,21 @@ const typeStyle = {
 
 export default function Button({
   children,
-  onClick,
-  isLoading,
-  isDisabled,
   type,
   size,
   maxWidth,
+  rounded,
+  onClick,
+  isLoading,
+  isDisabled,
 }: ButtonProps) {
+  const hasMultipleChildren = React.Children.count(children) > 1;
   return (
     <button
-      className={`flex items-center justify-center gap-2 disabled:opacity-60 disabled:pointer-events-none transition cursor-pointer
-        ${maxWidth ? 'w-full' : 'w-auto'} 
+      className={`flex items-center justify-center gap-2 disabled:opacity-60 disabled:pointer-events-none transition cursor-pointer font-medium
+        ${hasMultipleChildren ? 'pl-3 pr-5 gap-0' : ''}
+        ${maxWidth ? 'w-full' : 'w-auto'}
+        ${rounded ? 'rounded-full' : ''} 
         ${sizeStyles[size]} 
         ${typeStyle[type]} 
         `}

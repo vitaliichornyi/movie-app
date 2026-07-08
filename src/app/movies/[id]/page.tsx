@@ -11,6 +11,9 @@ import StatusMessage from '@/src/components/ui/StatusMessage';
 import Image from 'next/image';
 import StarIcon from '@/src/icons/StarIcon';
 import CountryTag from '@/src/components/ui/CountryTag';
+import Button from '@/src/components/ui/Button';
+import BookmarkIcon from '@/src/icons/BookmarkIcon';
+import PlayIcon from '@/src/icons/PlayIcon';
 
 async function fetchMovieDetailsByID(
   id: string,
@@ -62,14 +65,14 @@ export default function MoviePage({
               />
 
               <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/50 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 via-20% to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 via-30% to-transparent" />
             </div>
 
             <div className="layout-wrap pb-10">
               <div className="flex flex-col items-center">
                 <Breadcrumbs dynamicTitle={movieDetails.title} />
                 <h1 className="title-1">{movieDetails.title}</h1>
-                <div className="flex py-2 gap-2 font-bold">
+                <div className="flex py-2 gap-1 font-bold">
                   <span>{movieDetails.release_date.split('-')[0]}</span>
                   <span>·</span>
                   {movieDetails.genres.slice(0, 2).map((genre) => (
@@ -94,6 +97,15 @@ export default function MoviePage({
                         {country.name}
                       </CountryTag>
                     ))}
+                </div>
+                <div className="flex gap-2 pt-4">
+                  <Button type="primary" size="md">
+                    <PlayIcon />
+                    Play
+                  </Button>
+                  <Button type="secondary" size="md">
+                    <BookmarkIcon />
+                  </Button>
                 </div>
               </div>
             </div>
