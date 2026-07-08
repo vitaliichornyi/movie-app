@@ -15,7 +15,7 @@ const sizeStyles = {
 
 const typeStyle = {
   primary: ' bg-primary hover:bg-primary-hover',
-  secondary: 'bg-secondary hover:bg-secondary-hover',
+  secondary: 'bg-secondary hover:bg-secondary-hover backdrop-blur-xs',
 };
 
 export default function Button({
