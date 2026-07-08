@@ -17,12 +17,23 @@ export interface ProductionCountry {
   name: string;
 }
 
-export interface CreditMember {
+export interface Cast {
   id: number;
+  character: string;
   name: string;
-  character?: string;
-  job?: string;
   profile_path: string | null;
+}
+
+export interface Crew {
+  id: number;
+  job: string;
+  name: string;
+  profile_path: string | null;
+}
+
+export interface Credits {
+  cast: Cast[];
+  crew: Crew[];
 }
 
 export interface Movie {
@@ -33,8 +44,7 @@ export interface Movie {
   runtime_formatted: string;
   age_rating: string;
   vote_average: number;
-  cast: CreditMember[];
-  crew: CreditMember[];
+  credits: Credits;
   overview: string;
   production_countries: ProductionCountry[];
   original_language: string;

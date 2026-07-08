@@ -14,6 +14,7 @@ import CountryTag from '@/src/components/ui/CountryTag';
 import Button from '@/src/components/ui/Button';
 import BookmarkIcon from '@/src/icons/BookmarkIcon';
 import PlayIcon from '@/src/icons/PlayIcon';
+import CrewSlider from '@/src/components/ui/CrewSlider';
 
 async function fetchMovieDetailsByID(
   id: string,
@@ -42,8 +43,6 @@ export default function MoviePage({
   });
 
   const movieDetails = data?.data;
-
-  console.log(movieDetails);
 
   return (
     <>
@@ -108,6 +107,18 @@ export default function MoviePage({
                   </Button>
                 </div>
               </div>
+            </div>
+          </section>
+          <section className="layout-wrap flex flex-col gap-4 py-4">
+            <h2>Cast</h2>
+            <div>
+              <CrewSlider cast={movieDetails.credits.cast} />
+            </div>
+          </section>
+          <section className="layout-wrap py-4">
+            <div className="flex flex-col gap-2 w-full max-w-200 px-6 pb-6 pt-5 rounded-2xl bg-surface-container">
+              <h3>Overview</h3>
+              <p>{movieDetails.overview}</p>
             </div>
           </section>
         </article>
