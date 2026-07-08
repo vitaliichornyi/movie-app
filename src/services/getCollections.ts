@@ -1,5 +1,5 @@
 import { createClient } from '../utils/supabase/server';
-import { GetCollectionsResult } from '../components/types/collections';
+import { GetCollectionsResult } from '../types/collections';
 
 export default async function getCollections(): Promise<GetCollectionsResult> {
   try {

@@ -13,7 +13,7 @@ export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
 
   return (
     <nav>
-      <ol className="flex gap-1">
+      <ol className="flex py-2 gap-2 text-on-surface">
         <li>
           <Link href="/">Home</Link>
         </li>
@@ -27,9 +27,13 @@ export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
               : segment.charAt(0).toUpperCase() + segment.slice(1);
 
           return (
-            <li className="flex items-center gap-1" key={href}>
-              <span>/</span>
-              {isLast ? <span>{label}</span> : <Link href={href}>{label}</Link>}
+            <li className="flex items-center gap-2" key={href}>
+              <span className="font-extrabold">·</span>
+              {isLast ? (
+                <span className="text-on-surface-variant">{label}</span>
+              ) : (
+                <Link href={href}>{label}</Link>
+              )}
             </li>
           );
         })}

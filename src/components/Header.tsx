@@ -1,3 +1,7 @@
+'use client';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { useState } from 'react';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import SearchButton from './ui/SearchButton';
@@ -5,9 +9,20 @@ import Button from './ui/Button';
 import Nav from './ui/Nav';
 
 export default function Header() {
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setIsScrolled(latest > 0);
+  });
+
   return (
-    <header className="layout-wrap relative md:sticky top-0 left-0 w-full z-10 bg-surface/80 backdrop-blur-md">
-      <div className="flex justify-between h-18">
+    <motion.header
+      style={{ height: 'var(--header-height)' }}
+      className={`relative md:sticky top-0 w-full flex items-center z-10 bg-transparent transition
+        ${isScrolled ? 'md:bg-surface' : ''}`}
+    >
+      <div className="flex justify-between layout-wrap">
         <div className="flex items-center gap-6">
           <Link href="/">
             <Image
@@ -32,6 +47,6 @@ export default function Header() {
           </Button>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }

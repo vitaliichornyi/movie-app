@@ -7,9 +7,37 @@ export interface GetMoviesParams {
   sort_by?: string;
 }
 
+export interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface ProductionCountry {
+  iso_3166_1: string;
+  name: string;
+}
+
+export interface CreditMember {
+  id: number;
+  name: string;
+  character?: string;
+  job?: string;
+  profile_path: string | null;
+}
+
 export interface Movie {
   id: number;
   title: string;
+  genres: Genre[];
+  release_date: string;
+  runtime_formatted: string;
+  age_rating: string;
+  vote_average: number;
+  cast: CreditMember[];
+  crew: CreditMember[];
+  overview: string;
+  production_countries: ProductionCountry[];
+  original_language: string;
   poster_path: string;
   backdrop_path: string;
 }

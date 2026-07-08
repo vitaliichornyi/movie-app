@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'; // 1. Добавляем useCallback
+import { useEffect, useRef, useCallback } from 'react';
 
 export default function useIntersectionObserver(onIntersect: () => void) {
   const callbackRef = useRef(onIntersect);

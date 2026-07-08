@@ -1,4 +1,4 @@
-import { GetMovieDetailsResponse } from '../components/types/movies';
+import { GetMovieDetailsResponse } from '../types/movies';
 
 export default async function getMovieDetailsById(
   id: string,
@@ -12,7 +12,7 @@ export default async function getMovieDetailsById(
       };
     }
 
-    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits,reviews`;
+    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits,recommendations,release_dates,videos`;
     const response = await fetch(url);
 
     if (!response.ok) {

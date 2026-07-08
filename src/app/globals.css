@@ -1,57 +1,41 @@
 @import 'tailwindcss';
 
-:root {
-  --surface: #000000;
-  --on-surface: #ffffff;
-  --on-surface-variant: rgba(255, 255, 255, 0.32);
+@theme {
+  --color-surface: #000000;
+  --color-on-surface: #ffffff;
+  --color-on-surface-variant: rgba(255, 255, 255, 0.64);
 
-  --surface-container: #1d1d1d;
+  --color-surface-container: #1d1d1d;
 
-  --primary: #169ddb;
-  --primary-hover: #2caef2;
-  --on-primary: #ffffff;
+  --color-primary: #169ddb;
+  --color-primary-hover: #2caef2;
+  --color-on-primary: #ffffff;
 
-  --secondary: rgba(255, 255, 255, 0.1);
-  --secondary-hover: rgba(255, 255, 255, 0.16);
-  --on-secondary: #ffffff;
+  --color-secondary: rgba(255, 255, 255, 0.24);
+  --color-secondary-hover: rgba(255, 255, 255, 0.32);
+  --color-on-secondary: #ffffff;
 
-  --overlay: rgba(22, 22, 22, 0.6);
-}
+  --color-overlay: rgba(22, 22, 22, 0.6);
 
-@theme inline {
-  --color-surface: var(--surface);
-  --color-on-surface: var(--on-surface);
-  --color-on-surface-variant: var(--on-surface-variant);
-
-  --color-surface-container: var(--surface-container);
-
-  --color-primary: var(--primary);
-  --color-primary-hover: var(--primary-hover);
-  --color-on-primary: var(--on-primary);
-
-  --color-secondary: var(--secondary);
-  --color-secondary-hover: var(--secondary-hover);
-  --color-on-secondary: var(--on-secondary);
-
-  --color-overlay: var(--overlay);
+  --header-height: 72px;
 }
 
 @utility layout-wrap {
-  @apply w-full mx-auto max-w-[1920px] px-6 md:px-12;
+  @apply w-full max-w-[1920px] mx-auto px-6 md:px-12;
 }
 
 body {
-  line-height: 24px;
-
-  background-color: var(--surface);
-  color: var(--on-surface);
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
 }
 
-@layer base {
-  h1 {
-    @apply text-3xl sm:text-3xl lg:text-3xl font-bold;
-  }
-  h2 {
-    @apply text-2xl sm:text-2xl lg:text-2xl font-bold;
-  }
+h1 {
+  @apply text-3xl font-bold;
+}
+h2 {
+  @apply text-2xl font-bold;
+}
+
+@utility title-1 {
+  @apply text-center text-5xl! lg:text-6xl!;
 }

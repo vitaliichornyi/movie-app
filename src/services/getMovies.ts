@@ -1,4 +1,4 @@
-import { GetMoviesParams, GetMoviesResult } from '../components/types/movies';
+import { GetMoviesParams, GetMoviesResult } from '../types/movies';
 
 export default async function getMovies(
   queryParams: GetMoviesParams,
@@ -64,8 +64,3 @@ export default async function getMovies(
     return { data: null, error: errorMessage };
   }
 }
-
-// page: number;
-//   results: Movie[];
-//   total_results: number;
-//   total_pages: number;

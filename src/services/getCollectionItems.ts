@@ -2,8 +2,8 @@ import {
   CollectionItemsPageResult,
   CollectionItemsResult,
   GetCollectionItemsParams,
-} from '../components/types/collections';
-import { Movie } from '../components/types/movies';
+} from '../types/collections';
+import { Movie } from '../types/movies';
 
 import { createClient } from '../utils/supabase/server';
 
