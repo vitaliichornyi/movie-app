@@ -1,4 +1,4 @@
-export interface GetMoviesParams {
+export interface DiscoverMovieParams {
   with_genres?: string;
   with_origin_country?: string;
   primary_release_year?: string;
@@ -7,64 +7,53 @@ export interface GetMoviesParams {
   sort_by?: string;
 }
 
-export interface Genre {
+export interface Movie {
+  backdrop_path: string | null;
+  genre_ids: number[];
+  id: number;
+  title: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  poster_path: string | null;
+  release_date?: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface MovieExtended extends Omit<Movie, 'genre_ids'> {
+  genres: Genre[];
+  budget: number;
+  revenue: number;
+  runtime: number;
+  production_countries: ProductionCountries[];
+  credits: Credits;
+}
+
+interface Genre {
   id: number;
   name: string;
 }
 
-export interface ProductionCountry {
+interface ProductionCountries {
   iso_3166_1: string;
   name: string;
 }
 
-export interface Cast {
+export interface Credits {
+  cast: Cast[];
+}
+
+interface Cast {
   id: number;
   character: string;
   name: string;
   profile_path: string | null;
 }
 
-export interface Crew {
-  id: number;
-  job: string;
-  name: string;
-  profile_path: string | null;
-}
-
-export interface Credits {
-  cast: Cast[];
-  crew: Crew[];
-}
-
-export interface Movie {
-  id: number;
-  title: string;
-  genres: Genre[];
-  release_date: string;
-  runtime_formatted: string;
-  age_rating: string;
-  vote_average: number;
-  credits: Credits;
-  overview: string;
-  production_countries: ProductionCountry[];
-  original_language: string;
-  poster_path: string;
-  backdrop_path: string;
-}
-
-export interface GetMoviesResponse {
+export interface PaginatedResponse<T> {
   page: number;
-  results: Movie[];
+  results: T[];
   total_results: number;
   total_pages: number;
-}
-
-export interface GetMoviesResult {
-  data: GetMoviesResponse | null;
-  error: string | null;
-}
-
-export interface GetMovieDetailsResponse {
-  data: Movie | null;
-  error: string | null;
 }

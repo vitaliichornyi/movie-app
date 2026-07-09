@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 type WidthType = 92 | 154 | 185 | 342 | 500 | 780;
 
-interface PosterImageParam {
+interface PosterImageProps {
   id: number;
   index: number;
   poster_path: string | null;
@@ -17,7 +17,7 @@ export default function PosterImage({
   poster_path,
   title,
   width = 500,
-}: PosterImageParam) {
+}: PosterImageProps) {
   const height = Math.round(width * 1.5);
   return (
     <Link href={`/movies/${id}`}>

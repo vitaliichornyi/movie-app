@@ -1,8 +1,9 @@
-import { GetMovieDetailsResponse } from '../types/movies';
+import { MovieExtended } from '../types/movies';
+import { ServiceResult } from '../types/services';
 
 export default async function getMovieDetailsById(
-  id: string,
-): Promise<GetMovieDetailsResponse> {
+  id: number,
+): Promise<ServiceResult<MovieExtended>> {
   try {
     const apiKey = process.env.TMDB_API_KEY;
     if (!apiKey) {
@@ -12,7 +13,7 @@ export default async function getMovieDetailsById(
       };
     }
 
-    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits,recommendations,release_dates,videos`;
+    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=en-US&append_to_response=credits`;
     const response = await fetch(url);
 
     if (!response.ok) {

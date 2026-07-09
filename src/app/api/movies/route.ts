@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
+
+import { DiscoverMovieParams } from '@/src/types/movies';
 import getMovies from '@/src/services/getMovies';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
 
-  const params = {
+  const params: DiscoverMovieParams = {
     with_genres: searchParams.get('with_genres') || undefined,
     with_origin_country: searchParams.get('with_origin_country') || undefined,
     primary_release_year: searchParams.get('primary_release_year') || undefined,
@@ -20,8 +22,8 @@ export async function GET(request: NextRequest) {
   const { data, error } = await getMovies(params);
 
   if (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    return NextResponse.json({ data: null, error }, { status: 500 });
   }
 
-  return NextResponse.json({ data });
+  return NextResponse.json({ data, error: null }, { status: 200 });
 }

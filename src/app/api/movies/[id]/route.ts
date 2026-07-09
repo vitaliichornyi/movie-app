@@ -15,7 +15,7 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
   }
 
-  const { data, error } = await getMovieDetailsById(id);
+  const { data, error } = await getMovieDetailsById(parseInt(id));
 
   if (error) {
     const isNotFound = error.includes('404');
@@ -25,5 +25,5 @@ export async function GET(
     );
   }
 
-  return NextResponse.json({ data, error: null });
+  return NextResponse.json({ data, error: null }, { status: 200 });
 }

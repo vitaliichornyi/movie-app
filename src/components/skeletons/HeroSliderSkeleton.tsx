@@ -12,5 +12,3 @@ export default function HeroSliderSkeleton() {
     </div>
   );
 }
-
-// ${index != 1 ? 'hidden md:block' : ''}

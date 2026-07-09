@@ -1,8 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 
-import { CollectionItemsResult } from '@/src/types/collections';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -12,8 +10,9 @@ import 'swiper/css/autoplay';
 
 import HeroSliderSkeleton from './skeletons/HeroSliderSkeleton';
 import StatusMessage from './ui/StatusMessage';
+import { Movie } from '../types/movies';
 
-async function fetchCollection(slug: string): Promise<CollectionItemsResult> {
+async function fetchCollection(slug: string): Promise<Movie[]> {
   const response = await fetch(`/api/collections/${slug}`);
 
   if (!response.ok) {
@@ -21,7 +20,7 @@ async function fetchCollection(slug: string): Promise<CollectionItemsResult> {
     throw new Error(errorData.error || 'Unknown error');
   }
 
-  const data = await response.json();
+  const { data } = await response.json();
   return data;
 }
 
@@ -31,8 +30,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
     queryFn: () => fetchCollection(slug),
   });
 
-  const collections = data?.data || [];
-  const hasData = collections && collections.length > 0;
+  const hasData = data && data.length > 0;
   const isReady = !isLoading && !error;
 
   return (
@@ -59,7 +57,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
           pagination={{ clickable: true }}
           autoplay={{ delay: 5000, disableOnInteraction: true }}
         >
-          {collections.map((slide) => (
+          {data.map((slide) => (
             <SwiperSlide
               key={slide.id}
               className={`w-full h-full max-w-100 md:max-w-180 lg:max-w-240 flex`}

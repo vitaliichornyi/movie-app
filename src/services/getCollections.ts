@@ -1,7 +1,10 @@
+import { Collection } from '../types/collections';
+import { ServiceResult } from '../types/services';
 import { createClient } from '../utils/supabase/server';
-import { GetCollectionsResult } from '../types/collections';
 
-export default async function getCollections(): Promise<GetCollectionsResult> {
+export default async function getCollections(): Promise<
+  ServiceResult<Collection[]>
+> {
   try {
     const supabase = await createClient();
 

@@ -1,22 +1,20 @@
 'use client';
-
 import { useQuery } from '@tanstack/react-query';
-
-import { GetCollectionsResult } from '@/src/types/collections';
 
 import CollectionItem from './ui/CollectionItem';
 import StatusMessage from './ui/StatusMessage';
 import LoadingContainer from './ui/LoadingContainer';
 
-async function fetchCollections(): Promise<GetCollectionsResult> {
+import { Collection } from '../types/collections';
+
+async function fetchCollections(): Promise<Collection[]> {
   const response = await fetch('/api/collections');
 
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData.error || 'Unknown error');
   }
-  const data = await response.json();
-
+  const { data } = await response.json();
   return data;
 }
 
@@ -33,9 +31,7 @@ export default function CollectionsList() {
     refetchOnReconnect: false,
   });
 
-  const collections = data?.data || [];
-
-  const hasData = collections && collections.length > 0;
+  const hasData = data && data.length > 0;
   const isReady = !isLoading && !error;
 
   return (
@@ -46,7 +42,7 @@ export default function CollectionsList() {
 
       {isReady && hasData && (
         <>
-          {collections.map((collection) => (
+          {data.map((collection) => (
             <CollectionItem
               key={collection.id}
               slug={collection.slug}

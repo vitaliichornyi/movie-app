@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import useIntersectionObserver from '@/src/hooks/useIntersectionObserver';
 
-import { CollectionItemsPageResult } from '@/src/types/collections';
-
 import CollectionSliderSkeleton from '../skeletons/CollectionSliderSkeleton';
 import StatusMessage from './StatusMessage';
 import PosterImage from './PosterImage';
@@ -15,10 +13,13 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
+import { InfiniteServiceResult } from '@/src/types/services';
+import { Movie } from '@/src/types/movies';
+
 async function fetchCollectionItems(
   slug: string,
   pageParam: number,
-): Promise<CollectionItemsPageResult> {
+): Promise<InfiniteServiceResult<Movie[]>> {
   const limit = 10;
   const response = await fetch(
     `/api/collections/${slug}?page=${pageParam}&limit=${limit}`,
@@ -60,6 +61,8 @@ export default function CollectionItem({
       fetchNextPage();
     }
   }
+
+  console.log(data);
 
   const collectionItems =
     data?.pages.flatMap((page) => page.data).filter((item) => item !== null) ||

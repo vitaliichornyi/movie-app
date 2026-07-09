@@ -3,6 +3,7 @@ import {
   getAllCollectionItemsBySlug,
   getCollectionItemsPageBySlug,
 } from '@/src/services/getCollectionItems';
+import { CollectionItemsParams } from '@/src/types/collections';
 
 export async function GET(
   request: NextRequest,
@@ -15,7 +16,7 @@ export async function GET(
   const limit = searchParams.get('limit');
 
   if (page !== null || limit !== null) {
-    const params = {
+    const params: CollectionItemsParams = {
       slug: slug,
       page: page ? parseInt(page, 10) : undefined,
       limit: limit ? parseInt(limit, 10) : undefined,
@@ -25,17 +26,23 @@ export async function GET(
       await getCollectionItemsPageBySlug(params);
 
     if (error) {
-      return NextResponse.json({ error }, { status: 500 });
+      return NextResponse.json(
+        { data: null, isLastPage, error },
+        { status: 500 },
+      );
     }
 
-    return NextResponse.json({ data, isLastPage });
+    return NextResponse.json(
+      { data, isLastPage, error: null },
+      { status: 200 },
+    );
   } else {
     const { data, error } = await getAllCollectionItemsBySlug({ slug });
 
     if (error) {
-      return NextResponse.json({ error }, { status: 500 });
+      return NextResponse.json({ data: null, error }, { status: 500 });
     }
 
-    return NextResponse.json({ data });
+    return NextResponse.json({ data, error: null }, { status: 200 });
   }
 }

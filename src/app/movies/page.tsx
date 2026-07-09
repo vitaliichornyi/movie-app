@@ -10,14 +10,18 @@ import StatusMessage from '@/src/components/ui/StatusMessage';
 import Button from '@/src/components/ui/Button';
 import PosterImage from '@/src/components/ui/PosterImage';
 
-import { GetMoviesParams, GetMoviesResponse } from '@/src/types/movies';
+import {
+  DiscoverMovieParams,
+  Movie,
+  PaginatedResponse,
+} from '@/src/types/movies';
 
 async function fetchMovies(
-  page: any,
-  filters: GetMoviesParams,
-): Promise<GetMoviesResponse> {
+  page: number,
+  filters: DiscoverMovieParams,
+): Promise<PaginatedResponse<Movie>> {
   const searchParams = new URLSearchParams(filters as Record<string, string>);
-  searchParams.append('page', page);
+  searchParams.append('page', page.toString());
 
   const response = await fetch(`/api/movies?${searchParams.toString()}`);
 
@@ -26,7 +30,7 @@ async function fetchMovies(
     throw new Error(errorData.error || 'Unknown error');
   }
   const { data } = await response.json();
-
+  console.log(data);
   return data;
 }
 
@@ -34,9 +38,11 @@ export default function Movies() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const filters = Object.fromEntries(searchParams.entries()) as GetMoviesParams;
+  const filters = Object.fromEntries(
+    searchParams.entries(),
+  ) as DiscoverMovieParams;
 
-  const updateFilter = (key: keyof GetMoviesParams, value: string) => {
+  const updateFilter = (key: keyof DiscoverMovieParams, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (value) {
       params.set(key, value);
@@ -48,7 +54,6 @@ export default function Movies() {
   };
 
   const [triggerRef] = useIntersectionObserver(() => {
-    console.log('first');
     fetchNextPage();
   });
 
@@ -66,6 +71,7 @@ export default function Movies() {
       },
     });
 
+  console.log(data);
   const rawMovies = data?.pages.flatMap((page) => page.results) || [];
 
   const allMovies = rawMovies.filter(

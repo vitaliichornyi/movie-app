@@ -1,8 +1,9 @@
-import { GetMoviesParams, GetMoviesResult } from '../types/movies';
+import { DiscoverMovieParams, PaginatedResponse, Movie } from '../types/movies';
+import { ServiceResult } from '../types/services';
 
 export default async function getMovies(
-  queryParams: GetMoviesParams,
-): Promise<GetMoviesResult> {
+  queryParams: DiscoverMovieParams,
+): Promise<ServiceResult<PaginatedResponse<Movie>>> {
   try {
     const apiKey = process.env.TMDB_API_KEY;
     if (!apiKey) {

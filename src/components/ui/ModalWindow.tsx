@@ -1,10 +1,9 @@
-import { ReactNode } from 'react';
 import IconButton from './IconButton';
 import CloseIcon from '@/src/icons/CloseIcon';
 import { motion } from 'framer-motion';
 
 interface ModalWindowProps {
-  children: ReactNode;
+  children: React.ReactNode;
   maxWidth?: string;
   clickOnClose: () => void;
 }

@@ -5,14 +5,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
-import { Cast } from '@/src/types/movies';
-
 import Image from 'next/image';
+import { Credits } from '@/src/types/movies';
 
-interface CrewSliderProps {
-  cast: Cast[];
-}
-export default function CrewSlider({ cast }: CrewSliderProps) {
+export default function CrewSlider({ cast }: Credits) {
   return (
     <Swiper
       modules={[FreeMode]}
