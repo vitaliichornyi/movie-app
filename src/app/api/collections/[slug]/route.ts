@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+
 import {
   getAllCollectionItemsBySlug,
   getCollectionItemsPageBySlug,
-} from '@/src/services/getCollectionItems';
+} from '@/src/services/collections';
+
 import { CollectionItemsParams } from '@/src/types/collections';
 
 export async function GET(

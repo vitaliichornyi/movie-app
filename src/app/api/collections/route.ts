@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import getCollections from '@/src/services/getCollections';
+
+import { getCollections } from '@/src/services/collections';
 
 export async function GET() {
   const { data, error } = await getCollections();

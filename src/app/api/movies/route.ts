@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { DiscoverMovieParams } from '@/src/types/movies';
-import getMovies from '@/src/services/getMovies';
+import { getMovies } from '@/src/services/movies';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

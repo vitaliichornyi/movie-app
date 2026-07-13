@@ -1,5 +1,6 @@
-import getMovieDetailsById from '@/src/services/getMovieDetailsById';
 import { NextRequest, NextResponse } from 'next/server';
+
+import { getMovieDetailsById } from '@/src/services/movies';
 
 export async function GET(
   _request: NextRequest,

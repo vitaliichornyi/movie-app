@@ -1,7 +1,30 @@
-import { CollectionItemsParams } from '../types/collections';
-import { Movie } from '../types/movies';
-import { InfiniteServiceResult, ServiceResult } from '../types/services';
 import { createClient } from '../utils/supabase/server';
+
+import { Collection, CollectionItemsParams } from '../types/collections';
+import { InfiniteServiceResult, ServiceResult } from '../types/services';
+import { Movie } from '../types/movies';
+
+export async function getCollections(): Promise<ServiceResult<Collection[]>> {
+  try {
+    const supabase = await createClient();
+
+    const { data: collections, error } = await supabase
+      .from('collections')
+      .select('*')
+      .eq('section', 'home-page')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      return { data: null, error: error.message };
+    }
+
+    return { data: collections, error: null };
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown server error';
+    return { data: null, error: errorMessage };
+  }
+}
 
 export async function getCollectionItemsPageBySlug({
   slug,
