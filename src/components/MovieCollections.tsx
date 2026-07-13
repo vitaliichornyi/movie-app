@@ -1,24 +1,24 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 
-import CollectionItem from './ui/CollectionItem';
-import StatusMessage from './ui/StatusMessage';
 import LoadingContainer from './ui/LoadingContainer';
+import StatusMessage from './ui/StatusMessage';
+import MovieCollection from './MovieCollection';
 
 import { Collection } from '../types/collections';
 
 async function fetchCollections(): Promise<Collection[]> {
   const response = await fetch('/api/collections');
+  const { data, error } = await response.json();
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || 'Unknown error');
+    throw new Error(error || 'Unknown error');
   }
-  const { data } = await response.json();
+
   return data;
 }
 
-export default function CollectionsList() {
+export default function MovieCollections() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['collections'],
     queryFn: fetchCollections,
@@ -40,17 +40,15 @@ export default function CollectionsList() {
       {error && <StatusMessage type="error" />}
       {isReady && !hasData && <StatusMessage type="empty" />}
 
-      {isReady && hasData && (
-        <>
-          {data.map((collection) => (
-            <CollectionItem
-              key={collection.id}
-              slug={collection.slug}
-              title={collection.title}
-            />
-          ))}
-        </>
-      )}
+      {isReady &&
+        hasData &&
+        data.map((collection) => (
+          <MovieCollection
+            key={collection.id}
+            slug={collection.slug}
+            title={collection.title}
+          />
+        ))}
     </div>
   );
 }

@@ -13,7 +13,10 @@ export async function GET(
   const { id } = await params;
 
   if (!/^\d+$/.test(id)) {
-    return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
+    return NextResponse.json(
+      { data: null, error: 'Invalid ID format' },
+      { status: 400 },
+    );
   }
 
   const { data, error } = await getMovieDetailsById(parseInt(id));

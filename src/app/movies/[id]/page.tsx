@@ -17,9 +17,10 @@ import CrewSlider from '@/src/components/ui/CrewSlider';
 import { MovieExtended } from '@/src/types/movies';
 import DetailsListRow from '@/src/components/ui/DetailsListRow';
 import RatingWidget from '@/src/components/ui/RatingWidget';
-import CollectionsList from '@/src/components/CollectionsList';
+import MovieCollections from '@/src/components/MovieCollections';
 import ShowMoreButton from '@/src/components/ui/ShowMoreButton';
 import ReviewsSlider from '@/src/components/ReviewsSlider';
+import RelatedMovies from '@/src/components/RelatedMovies';
 
 async function fetchMovieDetailsByID(id: string): Promise<MovieExtended> {
   const response = await fetch(`/api/movies/${id}`);
@@ -116,6 +117,20 @@ export default function MoviePage({
             </div>
           </section>
 
+          {/* RelatedMovies */}
+
+          <RelatedMovies
+            movieId={data.id}
+            type="recommendations"
+            title="Similar movies"
+          />
+
+          <RelatedMovies
+            movieId={data.id}
+            type="similar"
+            title="Related movies"
+          />
+
           {/* Cast */}
           <section className="layout-wrap flex flex-col gap-4 py-8">
             <h2>Cast</h2>
@@ -210,8 +225,8 @@ export default function MoviePage({
             <ReviewsSlider reviews={data.reviews} />
           )}
 
-          {/* Collections  */}
-          <CollectionsList />
+          {/* MovieCollections  */}
+          <MovieCollections />
         </article>
       )}
     </>
