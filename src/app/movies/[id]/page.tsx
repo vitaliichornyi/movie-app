@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import Breadcrumbs from '@/src/components/ui/Breadcrumbs';
@@ -15,6 +15,11 @@ import PlayIcon from '@/src/icons/PlayIcon';
 import CrewSlider from '@/src/components/ui/CrewSlider';
 
 import { MovieExtended } from '@/src/types/movies';
+import DetailsListRow from '@/src/components/ui/DetailsListRow';
+import RatingWidget from '@/src/components/ui/RatingWidget';
+import CollectionsList from '@/src/components/CollectionsList';
+import ShowMoreButton from '@/src/components/ui/ShowMoreButton';
+import ReviewsSlider from '@/src/components/ReviewsSlider';
 
 async function fetchMovieDetailsByID(id: string): Promise<MovieExtended> {
   const response = await fetch(`/api/movies/${id}`);
@@ -40,6 +45,10 @@ export default function MoviePage({
     queryFn: () => fetchMovieDetailsByID(id),
   });
 
+  const [isOpened, setIsOpened] = useState(false);
+
+  console.log(data);
+
   return (
     <>
       {isLoading && <LoadingContainer />}
@@ -48,6 +57,7 @@ export default function MoviePage({
 
       {data && !isLoading && !error && (
         <article>
+          {/* Hero image */}
           <section className="relative flex items-end w-full min-h-150 2xl:min-h-200">
             <div className="absolute -top-(--header-height) inset-0 -z-10">
               <Image
@@ -62,7 +72,6 @@ export default function MoviePage({
               <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/50 to-transparent" />
               <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/40 via-30% to-transparent" />
             </div>
-
             <div className="layout-wrap pb-10">
               <div className="flex flex-col items-center">
                 <Breadcrumbs dynamicTitle={data.title} />
@@ -74,10 +83,11 @@ export default function MoviePage({
                   <span>·</span>
                   {data.genres.slice(0, 2).map((genre, index) => (
                     <React.Fragment key={genre.id}>
+                      {index > 0 && <span>·</span>}
                       <span>{genre.name}</span>
-                      {index < 1 && <span>·</span>}
                     </React.Fragment>
                   ))}
+                  <span>·</span>
                   <span className="flex gap-1">
                     <StarIcon />
                     {data.vote_average.toFixed(1)}
@@ -105,18 +115,103 @@ export default function MoviePage({
               </div>
             </div>
           </section>
-          <section className="layout-wrap flex flex-col gap-4 py-4">
+
+          {/* Cast */}
+          <section className="layout-wrap flex flex-col gap-4 py-8">
             <h2>Cast</h2>
             <div>
               <CrewSlider cast={data.credits.cast} />
             </div>
           </section>
-          <section className="layout-wrap py-4">
-            <div className="flex flex-col gap-2 w-full max-w-200 px-6 pb-6 pt-5 rounded-2xl bg-surface-container">
-              <h3>Overview</h3>
-              <p>{data.overview}</p>
+
+          {/* Overview && Rating widget */}
+          <section className="layout-wrap py-8">
+            <div className="flex flex-col md:flex-row gap-8">
+              <div className="flex flex-8 flex-col gap-2">
+                <div className="flex gap-2 flex-col w-full md:max-w-170">
+                  <h2>Overview</h2>
+                  <p>{data.overview}</p>
+                </div>
+                {isOpened && (
+                  <dl className="pt-4 pb-2">
+                    <DetailsListRow label="Director">
+                      {data.credits.crew
+                        .filter(
+                          (person) =>
+                            person.department === 'Directing' &&
+                            person.job === 'Director',
+                        )
+                        .map((person, index) => (
+                          <React.Fragment key={person.id}>
+                            {index > 0 && <span>·</span>}
+                            <span>{person.name}</span>
+                          </React.Fragment>
+                        ))}
+                    </DetailsListRow>
+                    <DetailsListRow label="Genres">
+                      {data.genres.map((genre, index) => (
+                        <React.Fragment key={genre.id}>
+                          {index > 0 && <span>·</span>}
+                          <span>{genre.name}</span>
+                        </React.Fragment>
+                      ))}
+                    </DetailsListRow>
+                    {data.release_date && (
+                      <DetailsListRow label="Release date">
+                        {new Date(
+                          data.release_date.replace(/-/g, '/'),
+                        ).toLocaleDateString('en-US', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric',
+                        })}
+                      </DetailsListRow>
+                    )}
+                    <DetailsListRow label="Country">
+                      {data.production_countries.slice(0, 2).map((country) => (
+                        <CountryTag
+                          key={country.iso_3166_1}
+                          isoCode={country.iso_3166_1}
+                        >
+                          {country.name}
+                        </CountryTag>
+                      ))}
+                    </DetailsListRow>
+                    <DetailsListRow label="Budget">{`$${Intl.NumberFormat('en-US').format(data.budget)}`}</DetailsListRow>
+                    <DetailsListRow label="Revenue">{`$${Intl.NumberFormat('en-US').format(data.revenue)}`}</DetailsListRow>
+
+                    <DetailsListRow label="Runtime">{`${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m`}</DetailsListRow>
+                    <DetailsListRow label="Language">
+                      {data.spoken_languages.map((language, index) => (
+                        <React.Fragment key={language.iso_639_1}>
+                          {index > 0 && <span>·</span>}
+                          <span>{language.name}</span>
+                        </React.Fragment>
+                      ))}
+                    </DetailsListRow>
+                  </dl>
+                )}
+                <ShowMoreButton
+                  isOpened={isOpened}
+                  onClick={() => setIsOpened(!isOpened)}
+                />
+              </div>
+              <div className="flex flex-4 flex-col">
+                <RatingWidget
+                  voteCount={Intl.NumberFormat('en-US').format(data.vote_count)}
+                  voteAverage={data.vote_average.toFixed(1)}
+                />
+              </div>
             </div>
           </section>
+
+          {/* Review */}
+          {data.reviews.results.length > 0 && (
+            <ReviewsSlider reviews={data.reviews} />
+          )}
+
+          {/* Collections  */}
+          <CollectionsList />
         </article>
       )}
     </>

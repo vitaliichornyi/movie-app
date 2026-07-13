@@ -28,6 +28,29 @@ export interface MovieExtended extends Omit<Movie, 'genre_ids'> {
   runtime: number;
   production_countries: ProductionCountries[];
   credits: Credits;
+  spoken_languages: SpokenLanguages[];
+  reviews: Reviews;
+}
+
+export interface Reviews {
+  page: number;
+  results: ReviewResults[];
+  total_pages: number;
+  total_results: number;
+}
+
+interface ReviewResults {
+  author: string;
+  content: string;
+  created_at: string;
+  id: string;
+  author_details: ReviewAuthorDetails;
+}
+
+interface ReviewAuthorDetails {
+  avatar_path: string;
+  name: string;
+  rating: number;
 }
 
 interface Genre {
@@ -40,15 +63,30 @@ interface ProductionCountries {
   name: string;
 }
 
-export interface Credits {
+interface Credits {
   cast: Cast[];
+  crew: Crew[];
 }
 
-interface Cast {
+export interface Cast {
   id: number;
   character: string;
   name: string;
   profile_path: string | null;
+}
+
+interface Crew {
+  id: number;
+  name: string;
+  department: string;
+  job: string;
+  profile_path: string | null;
+}
+
+interface SpokenLanguages {
+  english_name: string;
+  iso_639_1: string;
+  name: string;
 }
 
 export interface PaginatedResponse<T> {

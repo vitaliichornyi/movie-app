@@ -40,5 +40,5 @@ h3 {
 }
 
 @utility title-1 {
-  @apply text-center text-5xl! lg:text-6xl!;
+  @apply text-center text-5xl! lg:text-6xl! font-bold;
 }
