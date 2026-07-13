@@ -5,6 +5,7 @@ import {
   Movie,
   MovieExtended,
 } from '../types/movies';
+import { error } from 'console';
 
 export async function getMovies(
   queryParams: DiscoverMovieParams,
@@ -159,6 +160,40 @@ export async function getRecommendationsByMovieId(
     }
 
     const data = await response.json();
+    return { data, error: null };
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown server error';
+    return { data: null, error: errorMessage };
+  }
+}
+
+export async function searchMovieByName(
+  query: string,
+  page: number,
+): Promise<ServiceResult<PaginatedResponse<Movie>>> {
+  try {
+    const apiKey = process.env.TMDB_API_KEY;
+    if (!apiKey) {
+      return {
+        data: null,
+        error: 'API_KEY is not configured on the server.',
+      };
+    }
+
+    const response = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${query}&page=${page}`,
+    );
+
+    if (!response.ok) {
+      return {
+        data: null,
+        error: `Server responded with status ${response.status}`,
+      };
+    }
+
+    const data = await response.json();
+
     return { data, error: null };
   } catch (error) {
     const errorMessage =
