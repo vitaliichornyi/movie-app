@@ -18,7 +18,7 @@ async function fetchCollections(): Promise<Collection[]> {
   return data;
 }
 
-export default function MovieCollections() {
+export default function MovieCollectionGrid() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['collections'],
     queryFn: fetchCollections,

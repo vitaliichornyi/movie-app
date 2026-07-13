@@ -17,10 +17,10 @@ import CrewSlider from '@/src/components/ui/CrewSlider';
 import { MovieExtended } from '@/src/types/movies';
 import DetailsListRow from '@/src/components/ui/DetailsListRow';
 import RatingWidget from '@/src/components/ui/RatingWidget';
-import MovieCollections from '@/src/components/MovieCollections';
 import ShowMoreButton from '@/src/components/ui/ShowMoreButton';
 import ReviewsSlider from '@/src/components/ReviewsSlider';
 import RelatedMovies from '@/src/components/RelatedMovies';
+import MovieCollectionGrid from '@/src/components/MovieCollectionGrid';
 
 async function fetchMovieDetailsByID(id: string): Promise<MovieExtended> {
   const response = await fetch(`/api/movies/${id}`);
@@ -225,8 +225,8 @@ export default function MoviePage({
             <ReviewsSlider reviews={data.reviews} />
           )}
 
-          {/* MovieCollections  */}
-          <MovieCollections />
+          {/* MovieCollectionGrid  */}
+          <MovieCollectionGrid />
         </article>
       )}
     </>
