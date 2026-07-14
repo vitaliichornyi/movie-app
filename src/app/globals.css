@@ -29,16 +29,6 @@ body {
   color: var(--color-on-surface);
 }
 
-h1 {
-  @apply text-3xl font-bold;
-}
-h2 {
-  @apply text-2xl font-bold;
-}
-h3 {
-  @apply text-xl font-bold;
-}
-
 @utility title-1 {
   @apply text-center text-5xl! lg:text-6xl! font-bold;
 }

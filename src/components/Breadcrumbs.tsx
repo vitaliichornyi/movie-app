@@ -13,7 +13,7 @@ export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
 
   return (
     <nav>
-      <ol className="flex py-2 gap-2 text-on-surface">
+      <ul className="flex py-2 gap-2 text-on-surface">
         <li>
           <Link href="/">Home</Link>
         </li>
@@ -37,7 +37,7 @@ export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
             </li>
           );
         })}
-      </ol>
+      </ul>
     </nav>
   );
 }

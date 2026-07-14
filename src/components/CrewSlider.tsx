@@ -8,11 +8,11 @@ import 'swiper/css/autoplay';
 import Image from 'next/image';
 import { Cast } from '@/src/types/movies';
 
-interface CrewSlider {
+interface CrewSliderProps {
   cast: Cast[];
 }
 
-export default function CrewSlider({ cast }: CrewSlider) {
+export default function CrewSlider({ cast }: CrewSliderProps) {
   return (
     <Swiper
       modules={[FreeMode]}

@@ -2,11 +2,6 @@ import { useState } from 'react';
 import SelectInput from './ui/SelectInput';
 import { DiscoverMovieParams } from '../types/movies';
 
-interface SelectorConfig {
-  id: keyof DiscoverMovieParams;
-  label: string;
-  options: { value: string; label: string }[];
-}
 export const selectorConfig: SelectorConfig[] = [
   {
     id: 'with_origin_country',
@@ -76,6 +71,12 @@ export const selectorConfig: SelectorConfig[] = [
     ],
   },
 ];
+
+interface SelectorConfig {
+  id: keyof DiscoverMovieParams;
+  label: string;
+  options: { value: string; label: string }[];
+}
 
 interface FilterBarProps {
   filters: DiscoverMovieParams;

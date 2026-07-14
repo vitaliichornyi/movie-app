@@ -2,11 +2,10 @@
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useState } from 'react';
 
-import Link from 'next/link';
-import Image from 'next/image';
+import Nav from './Nav';
 import SearchButton from './ui/SearchButton';
 import Button from './ui/Button';
-import Nav from './ui/Nav';
+import Logo from './ui/Logo';
 
 export default function Header() {
   const { scrollY } = useScroll();
@@ -22,17 +21,9 @@ export default function Header() {
       className={`relative md:sticky top-0 w-full flex items-center z-10 bg-transparent transition
         ${isScrolled ? 'md:bg-surface' : ''}`}
     >
-      <div className="flex justify-between layout-wrap">
+      <div className="layout-wrap flex justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/">
-            <Image
-              src="/logo.svg"
-              alt="Movie logo"
-              width={122}
-              height={34}
-              priority
-            />
-          </Link>
+          <Logo />
           <Nav />
         </div>
         <div className="flex items-center gap-2">

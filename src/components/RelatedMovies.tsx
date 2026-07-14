@@ -4,8 +4,9 @@ import { useState } from 'react';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 import MovieSlider from './MovieSlider';
-import StatusMessage from './ui/StatusMessage';
+import StatusMessage from './StatusMessage';
 import CollectionSliderSkeleton from './skeletons/CollectionSliderSkeleton';
+import Headline from './ui/Headline';
 
 interface RelatedMoviesProps {
   title: string;
@@ -60,11 +61,12 @@ export default function RelatedMovies({
   const isReady = !isError && !isFirstLoading;
 
   return (
-    <section className="flex flex-col gap-4 layout-wrap" ref={triggerRef}>
-      <h2>{title}</h2>
+    <section ref={triggerRef}>
+      <Headline as="h2" variant="h2">
+        {title}
+      </Headline>
       {isFirstLoading && <CollectionSliderSkeleton />}
       {isError && <StatusMessage type="error" />}
-
       {isReady && !hasMovie && <StatusMessage type="empty" />}
       {isReady && hasMovie && (
         <MovieSlider

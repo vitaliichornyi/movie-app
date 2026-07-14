@@ -1,3 +1,5 @@
+import Headline from './ui/Headline';
+
 type StatusMessageType = 'empty' | 'error';
 
 interface StatusMessageProps {
@@ -29,7 +31,9 @@ export default function StatusMessage({
   return (
     <div className="flex items-center justify-center w-full h-140">
       <div className="max-w-180 text-center">
-        <h2>{title ?? defaultTitle}</h2>
+        <Headline as="h2" variant="h2">
+          {title ?? defaultTitle}
+        </Headline>
         <p>{message ?? defaultMessage}</p>
       </div>
     </div>

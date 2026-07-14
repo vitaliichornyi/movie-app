@@ -1,4 +1,4 @@
-import IconButton from './IconButton';
+import IconButton from './ui/IconButton';
 import CloseIcon from '@/src/icons/CloseIcon';
 import { motion } from 'framer-motion';
 

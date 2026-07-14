@@ -1,9 +1,10 @@
 'use client';
+
 import SearchResultsProvider from '@/src/components/SearchResultsProvider';
 
 export default function Search() {
   return (
-    <main className="flex flex-col gap-4 layout-wrap">
+    <main className="layout-wrap">
       <SearchResultsProvider context="page" />
     </main>
   );

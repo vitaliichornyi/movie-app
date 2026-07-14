@@ -9,7 +9,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 
 import HeroSliderSkeleton from './skeletons/HeroSliderSkeleton';
-import StatusMessage from './ui/StatusMessage';
+import StatusMessage from './StatusMessage';
 import { Movie } from '../types/movies';
 
 async function fetchCollection(slug: string): Promise<Movie[]> {
@@ -34,7 +34,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
   const isReady = !isLoading && !error;
 
   return (
-    <div>
+    <section>
       {isLoading && <HeroSliderSkeleton />}
       {error && <StatusMessage type="error" />}
       {isReady && !hasData && <StatusMessage type="empty" />}
@@ -71,6 +71,6 @@ export default function HeroSlider({ slug }: { slug: string }) {
           ))}
         </Swiper>
       )}
-    </div>
+    </section>
   );
 }

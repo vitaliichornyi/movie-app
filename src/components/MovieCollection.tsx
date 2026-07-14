@@ -3,7 +3,8 @@ import { useState } from 'react';
 import useIntersectionObserver from '@/src/hooks/useIntersectionObserver';
 
 import CollectionSliderSkeleton from './skeletons/CollectionSliderSkeleton';
-import StatusMessage from './ui/StatusMessage';
+import Headline from './ui/Headline';
+import StatusMessage from './StatusMessage';
 import MovieSlider from './MovieSlider';
 
 import { InfiniteServiceResult } from '@/src/types/services';
@@ -60,11 +61,12 @@ export default function MovieCollection({
   const isReady = !isError && !isFirstLoading;
 
   return (
-    <div className="flex flex-col gap-4" ref={triggerRef}>
-      <h2>{title}</h2>
+    <section ref={triggerRef}>
+      <Headline as="h2" variant="h2">
+        {title}
+      </Headline>
       {isFirstLoading && <CollectionSliderSkeleton />}
       {isError && <StatusMessage type="error" />}
-
       {isReady && !hasMovie && <StatusMessage type="empty" />}
       {isReady && hasMovie && (
         <MovieSlider
@@ -74,6 +76,6 @@ export default function MovieCollection({
           fetchNextPage={fetchNextPage}
         />
       )}
-    </div>
+    </section>
   );
 }

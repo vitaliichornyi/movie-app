@@ -3,12 +3,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import useIntersectionObserver from '@/src/hooks/useIntersectionObserver';
 
-import Breadcrumbs from '@/src/components/ui/Breadcrumbs';
+import Breadcrumbs from '@/src/components/Breadcrumbs';
 import FilterBar from '@/src/components/FilterBar';
 import MoviesSkeleton from '@/src/components/skeletons/MoviesSkeleton';
-import StatusMessage from '@/src/components/ui/StatusMessage';
+import StatusMessage from '@/src/components/StatusMessage';
 import Button from '@/src/components/ui/Button';
-import PosterImage from '@/src/components/ui/PosterImage';
+import PosterImage from '@/src/components/PosterImage';
 
 import {
   DiscoverMovieParams,
@@ -85,7 +85,7 @@ export default function Movies() {
   const emptyResponse = !hasMovie && !isError && !isFirstLoading;
 
   return (
-    <main className="py-4 px-6 md:px-12">
+    <main className="layout-wrap">
       <Breadcrumbs />
       <FilterBar filters={filters} onFilterChange={updateFilter} />
       <section>

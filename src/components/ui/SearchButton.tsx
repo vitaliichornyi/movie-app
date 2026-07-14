@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import SearchIcon from '@/src/icons/SearchIcon';
 
-import ModalWindow from './ModalWindow';
+import ModalWindow from '../ModalWindow';
 import SearchResultsProvider from '../SearchResultsProvider';
 
 export default function SearchButton() {

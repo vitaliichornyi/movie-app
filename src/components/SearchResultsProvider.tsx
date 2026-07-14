@@ -6,8 +6,8 @@ import { Movie, PaginatedResponse } from '../types/movies';
 
 import SearchField from './ui/SearchField';
 import SearchResultSkeleton from './skeletons/SearchResultSkeleton';
-import PosterImage from './ui/PosterImage';
-import StatusMessage from './ui/StatusMessage';
+import PosterImage from './PosterImage';
+import StatusMessage from './StatusMessage';
 import Button from './ui/Button';
 
 async function searchMovies(
@@ -73,8 +73,7 @@ export default function SearchResultsProvider({
         value={inputValue}
         onChange={setInputValue}
       />
-
-      <div
+      <section
         className={
           context === 'modal' ? 'max-h-120 overflow-y-auto rounded-xl' : ''
         }
@@ -109,7 +108,7 @@ export default function SearchResultsProvider({
             </div>
           </>
         )}
-      </div>
+      </section>
     </>
   );
 }

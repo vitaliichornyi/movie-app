@@ -1,4 +1,4 @@
-import FooterNav from './ui/FooterNav';
+import Link from 'next/link';
 
 const footerNav = [
   {
@@ -44,10 +44,25 @@ const footerNav = [
 
 export default function Footer() {
   return (
-    <div className="layout-wrap grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 pb-32 pt-24">
+    <footer className="layout-wrap grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 pb-32 pt-24">
       {footerNav.map((item) => (
-        <FooterNav title={item.title} links={item.links} key={item.id} />
+        <nav key={item.id} className="flex flex-col gap-2">
+          <h5 className="font-medium">{item.title}</h5>
+          <ul className="flex flex-col gap-1">
+            {item.links.map((link) => (
+              <li key={link.id}>
+                <Link
+                  className="text-sm text-on-surface-variant hover:text-on-surface transition"
+                  href={link.href}
+                  prefetch={false}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       ))}
-    </div>
+    </footer>
   );
 }

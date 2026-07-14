@@ -1,8 +1,8 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 
-import LoadingContainer from './ui/LoadingContainer';
-import StatusMessage from './ui/StatusMessage';
+import LoadingContainer from './LoadingContainer';
+import StatusMessage from './StatusMessage';
 import MovieCollection from './MovieCollection';
 
 import { Collection } from '../types/collections';
@@ -35,11 +35,10 @@ export default function MovieCollectionGrid() {
   const isReady = !isLoading && !error;
 
   return (
-    <div className="layout-wrap flex flex-col gap-8 mt-6">
+    <div className="layout-wrap">
       {isLoading && <LoadingContainer />}
       {error && <StatusMessage type="error" />}
       {isReady && !hasData && <StatusMessage type="empty" />}
-
       {isReady &&
         hasData &&
         data.map((collection) => (
