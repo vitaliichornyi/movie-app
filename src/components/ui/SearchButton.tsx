@@ -1,11 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+
 import SearchIcon from '@/src/icons/SearchIcon';
-import SearchModal from '../SearchModal';
+
+import ModalWindow from './ModalWindow';
+import SearchResultsProvider from '../SearchResultsProvider';
 
 export default function SearchButton() {
   const [modalIsOpened, setModalIsOpened] = useState(false);
+
+  const pathname = usePathname();
+  useEffect(() => {
+    setModalIsOpened(false);
+  }, [pathname]);
 
   return (
     <>
@@ -16,10 +25,11 @@ export default function SearchButton() {
         <SearchIcon />
         Search...
       </button>
-      <SearchModal
-        modalIsOpened={modalIsOpened}
-        setModalIsOpened={() => setModalIsOpened(!modalIsOpened)}
-      />
+      {modalIsOpened && (
+        <ModalWindow clickOnClose={() => setModalIsOpened(!modalIsOpened)}>
+          <SearchResultsProvider context="modal" />
+        </ModalWindow>
+      )}
     </>
   );
 }

@@ -27,10 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.className} antialiased`}>
       <body>
-        <Header />
-        <Providers>{children}</Providers>
-        <Footer />
-        <TabBar />
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+          <TabBar />
+        </Providers>
       </body>
     </html>
   );

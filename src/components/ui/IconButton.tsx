@@ -6,7 +6,7 @@ interface IconButtonProps {
 export default function IconButton({ children, onClick }: IconButtonProps) {
   return (
     <button
-      className="p-2 rounded-lg hover:bg-secondary-hover transition cursor-pointer"
+      className="flex items-center justify-center w-12 h-14 text-on-surface-variant hover:text-on-surface transition cursor-pointer"
       onClick={onClick}
     >
       {children}
