@@ -31,6 +31,7 @@ export default function CrewSlider({ cast }: CrewSliderProps) {
                     : '/no-poster.jpg'
                 }
                 fill
+                sizes="112px"
                 className="object-cover object-center"
                 alt={member.name}
               />
