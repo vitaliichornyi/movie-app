@@ -18,7 +18,7 @@ export default function Header() {
   return (
     <motion.header
       style={{ height: 'var(--header-height)' }}
-      className={`relative md:sticky top-0 w-full flex items-center z-10 bg-transparent transition
+      className={`relative md:sticky top-0 w-full flex items-center z-20 bg-transparent transition
         ${isScrolled ? 'md:bg-surface' : ''}`}
     >
       <div className="layout-wrap flex justify-between">
