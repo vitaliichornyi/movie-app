@@ -1,5 +1,5 @@
 'use client';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,6 +19,8 @@ interface ReviewSliderProps {
 export default function ReviewSlider({ reviews }: ReviewSliderProps) {
   const prevBtnRef = useRef<HTMLButtonElement>(null);
   const nextBtnRef = useRef<HTMLButtonElement>(null);
+
+  const [, setSwiperReady] = useState(false);
 
   const router = useRouter();
 
@@ -46,6 +48,7 @@ export default function ReviewSlider({ reviews }: ReviewSliderProps) {
             swiper.params.navigation.prevEl = prevBtnRef.current;
             swiper.params.navigation.nextEl = nextBtnRef.current;
           }}
+          onInit={() => setSwiperReady(true)}
           freeMode={true}
           slidesPerView={1}
           spaceBetween={24}

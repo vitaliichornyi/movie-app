@@ -1,5 +1,5 @@
 'use client';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
@@ -26,6 +26,8 @@ export default function MovieSlider({
   const prevBtnRef = useRef<HTMLButtonElement>(null);
   const nextBtnRef = useRef<HTMLButtonElement>(null);
 
+  const [, setSwiperReady] = useState(false);
+
   function handleReachEnd() {
     if (isFetchingNextPage || !hasNextPage) return;
     fetchNextPage();
@@ -47,6 +49,7 @@ export default function MovieSlider({
           swiper.params.navigation.prevEl = prevBtnRef.current;
           swiper.params.navigation.nextEl = nextBtnRef.current;
         }}
+        onInit={() => setSwiperReady(true)}
         freeMode={true}
         slidesPerView={3}
         spaceBetween={16}

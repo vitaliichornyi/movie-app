@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, Navigation } from 'swiper/modules';
@@ -35,6 +35,8 @@ export default function HeroSlider({ slug }: { slug: string }) {
   const prevBtnRef = useRef<HTMLButtonElement>(null);
   const nextBtnRef = useRef<HTMLButtonElement>(null);
 
+  const [, setSwiperReady] = useState(false);
+
   const hasData = data && data.length > 0;
   const isReady = !isLoading && !error;
 
@@ -67,6 +69,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
               swiper.params.navigation.prevEl = prevBtnRef.current;
               swiper.params.navigation.nextEl = nextBtnRef.current;
             }}
+            onInit={() => setSwiperReady(true)}
             slidesPerView={'auto'}
             spaceBetween={24}
             loop={true}
