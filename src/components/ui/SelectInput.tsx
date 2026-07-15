@@ -1,3 +1,4 @@
+import ArrowIcon from '@/src/icons/ArrowIcon';
 import { motion } from 'framer-motion';
 
 interface SelectOption {
@@ -31,7 +32,7 @@ export default function SelectInput({
     setIsActive();
   }
 
-  const isOpen = id === isActive;
+  const isOpened = id === isActive;
 
   return (
     <div className="relative">
@@ -59,9 +60,16 @@ export default function SelectInput({
         >
           {selectedValue}
         </motion.div>
+        <motion.div
+          animate={{ rotate: isOpened ? 180 : 0 }}
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          className="absolute flex items-center h-full right-3"
+        >
+          <ArrowIcon />
+        </motion.div>
       </button>
 
-      {isOpen && (
+      {isOpened && (
         <ul className="absolute top-[108%] w-full max-h-68 rounded-xl overflow-y-auto bg-surface z-10">
           {options.map((option) => (
             <li key={option.value}>
