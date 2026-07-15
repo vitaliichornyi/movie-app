@@ -15,6 +15,7 @@ import {
   Movie,
   PaginatedResponse,
 } from '@/src/types/movies';
+import Headline from '@/src/components/ui/Headline';
 
 async function fetchMovies(
   page: number,
@@ -87,6 +88,9 @@ export default function Movies() {
   return (
     <main className="layout-wrap">
       <Breadcrumbs />
+      <Headline as="h1" variant="h1">
+        Movies
+      </Headline>
       <FilterBar filters={filters} onFilterChange={updateFilter} />
       <section>
         {isFirstLoading && <MoviesSkeleton />}

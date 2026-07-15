@@ -7,8 +7,8 @@ interface HeadlineProps {
 }
 
 const styles = {
-  h1: 'text-4xl font-bold tracking-tight',
-  h2: 'text-2xl font-semibold tracking-tight pb-4 pt-8',
+  h1: 'text-4xl font-bold tracking-tight pb-4',
+  h2: 'text-2xl font-bold tracking-tight pb-4 pt-8',
   h3: 'text-sm font-semibold uppercase tracking-wider',
   h4: 'text-xs font-medium',
 };
