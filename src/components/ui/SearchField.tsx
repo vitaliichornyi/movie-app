@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 
-import CloseIcon from '@/src/icons/CloseIcon';
 import SearchIcon from '@/src/icons/SearchIcon';
 import IconButton from './IconButton';
 import ClearIcon from '@/src/icons/ClearIcon';
