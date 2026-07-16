@@ -6,6 +6,7 @@ interface RatingWidgetProps {
 }
 
 function getRatingVerdict(rating: number): string {
+  if (rating == 0.0) return 'No ratings yet';
   if (rating >= 8.5) return 'Masterpiece';
   if (rating >= 7.0) return 'Good movie';
   if (rating >= 5.5) return 'Not bad';
