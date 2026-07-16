@@ -5,7 +5,6 @@ import {
   Movie,
   MovieExtended,
 } from '../types/movies';
-import { error } from 'console';
 
 export async function getMovies(
   queryParams: DiscoverMovieParams,

@@ -31,7 +31,6 @@ async function fetchMovies(
     throw new Error(errorData.error || 'Unknown error');
   }
   const { data } = await response.json();
-  console.log(data);
   return data;
 }
 
@@ -72,7 +71,6 @@ export default function Movies() {
       },
     });
 
-  console.log(data);
   const rawMovies = data?.pages.flatMap((page) => page.results) || [];
 
   const allMovies = rawMovies.filter(
