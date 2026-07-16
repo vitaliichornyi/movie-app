@@ -25,7 +25,7 @@ export interface MovieExtended extends Omit<Movie, 'genre_ids'> {
   genres: Genre[];
   budget: number;
   revenue: number;
-  runtime: number;
+  runtime: number | null;
   production_countries: ProductionCountries[];
   credits: Credits;
   spoken_languages: SpokenLanguages[];
@@ -48,9 +48,9 @@ interface ReviewResults {
 }
 
 interface ReviewAuthorDetails {
-  avatar_path: string;
+  avatar_path: string | null;
   name: string;
-  rating: number;
+  rating: number | null;
 }
 
 export interface Genre {
