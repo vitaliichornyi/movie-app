@@ -24,14 +24,9 @@ export default function ReviewSlider({ reviews }: ReviewSliderProps) {
 
   return (
     <section>
-      <div className="flex gap-2 items-baseline">
-        <Headline as="h2" variant="h2">
-          Reviews
-        </Headline>
-        <span className="text-xl text-on-surface-variant">
-          {reviews.total_results}
-        </span>
-      </div>
+      <Headline as="h2" variant="h2" totalResults={reviews.total_pages}>
+        Reviews
+      </Headline>
       <div className="relative w-full">
         <SliderNavButton btnRef={setPrevEl} direction="prev" />
         <SliderNavButton btnRef={setNextEl} direction="next" />

@@ -4,6 +4,7 @@ interface HeadlineProps {
   as: ElementType;
   variant: 'h1' | 'h2' | 'h3' | 'h4';
   children: React.ReactNode;
+  totalResults?: number;
 }
 
 const styles = {
@@ -16,6 +17,14 @@ export default function Headline({
   as: Headline,
   variant,
   children,
+  totalResults,
 }: HeadlineProps) {
-  return <Headline className={styles[variant]}>{children}</Headline>;
+  return (
+    <div className="flex gap-3 items-baseline">
+      <Headline className={styles[variant]}>{children}</Headline>
+      <span className="text-[1.4rem] text-on-surface-variant">
+        {totalResults}
+      </span>
+    </div>
+  );
 }
