@@ -3,15 +3,9 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import Breadcrumbs from '@/src/components/Breadcrumbs';
 import LoadingContainer from '@/src/components/LoadingContainer';
 import StatusMessage from '@/src/components/StatusMessage';
-import Image from 'next/image';
-import StarIcon from '@/src/icons/StarIcon';
 import Tag from '@/src/components/ui/Tag';
-import Button from '@/src/components/ui/Button';
-import BookmarkIcon from '@/src/icons/BookmarkIcon';
-import PlayIcon from '@/src/icons/PlayIcon';
 import CrewSlider from '@/src/components/CrewSlider';
 
 import { MovieExtended } from '@/src/types/movies';
@@ -22,6 +16,7 @@ import ReviewSlider from '@/src/components/ReviewSlider';
 import RelatedMovies from '@/src/components/RelatedMovies';
 import MovieCollectionGrid from '@/src/components/MovieCollectionGrid';
 import Headline from '@/src/components/ui/Headline';
+import HeroImage from '@/src/components/HeroImage';
 
 async function fetchMovieDetailsByID(id: string): Promise<MovieExtended> {
   const response = await fetch(`/api/movies/${id}`);
@@ -30,7 +25,6 @@ async function fetchMovieDetailsByID(id: string): Promise<MovieExtended> {
     const errorData = await response.json();
     throw new Error(errorData.error || 'Unknown error');
   }
-
   const { data } = await response.json();
   return data;
 }
@@ -56,64 +50,14 @@ export default function MoviePage({
         {error && <StatusMessage type="error" />}
         {data && !isLoading && !error && (
           <>
-            <section className="relative flex items-end w-full min-h-150 2xl:min-h-200">
-              <div className="absolute -top-(--header-height) inset-0 -z-10">
-                <Image
-                  src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
-                  fill
-                  priority
-                  unoptimized
-                  alt={data.title}
-                  className="object-cover object-center"
-                />
-
-                <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/50 to-transparent" />
-                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/40 via-30% to-transparent" />
-              </div>
-              <div className="layout-wrap pb-10">
-                <div className="flex flex-col items-center">
-                  <Breadcrumbs dynamicTitle={data.title} />
-                  <h1 className="title-1">{data.title}</h1>
-                  <div className="flex py-2 gap-1 font-bold">
-                    {data.release_date && (
-                      <span>{data.release_date.split('-')[0]}</span>
-                    )}
-                    <span>·</span>
-                    {data.genres.slice(0, 2).map((genre, index) => (
-                      <React.Fragment key={genre.id}>
-                        {index > 0 && <span>·</span>}
-                        <span>{genre.name}</span>
-                      </React.Fragment>
-                    ))}
-                    <span>·</span>
-                    <span className="flex gap-1">
-                      <StarIcon />
-                      {data.vote_average.toFixed(1)}
-                    </span>
-                  </div>
-                  <div className="flex gap-1">
-                    {data.production_countries.slice(0, 2).map((country) => (
-                      <Tag
-                        key={country.iso_3166_1}
-                        isoCode={country.iso_3166_1}
-                      >
-                        {country.name}
-                      </Tag>
-                    ))}
-                  </div>
-                  <div className="flex gap-2 pt-4">
-                    <Button type="primary" size="md">
-                      <PlayIcon />
-                      Play
-                    </Button>
-                    <Button type="secondary" size="md">
-                      <BookmarkIcon />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </section>
-
+            <HeroImage
+              title={data.title}
+              backdrop_path={data.backdrop_path}
+              releaseYear={data.release_date && data.release_date.split('-')[0]}
+              genres={data.genres}
+              vote_average={data.vote_average}
+              production_countries={data.production_countries}
+            />
             <div className="layout-wrap">
               <RelatedMovies
                 movieId={data.id}
@@ -125,14 +69,12 @@ export default function MoviePage({
                 type="similar"
                 title="Related movies"
               />
-
               <section>
                 <Headline as="h2" variant="h2">
                   Cast
                 </Headline>
                 <CrewSlider cast={data.credits.cast} />
               </section>
-
               <section>
                 <div className="flex flex-col md:flex-row gap-8">
                   <div className="flex flex-8 flex-col gap-2">

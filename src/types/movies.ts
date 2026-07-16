@@ -53,12 +53,12 @@ interface ReviewAuthorDetails {
   rating: number;
 }
 
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
 }
 
-interface ProductionCountries {
+export interface ProductionCountries {
   iso_3166_1: string;
   name: string;
 }
