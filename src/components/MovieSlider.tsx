@@ -37,8 +37,6 @@ export default function MovieSlider({
     fetchNextPage();
   }
 
-  console.log(items);
-
   return (
     <div className="relative w-full">
       <SliderNavButton btnRef={setPrevEl} direction="prev" />

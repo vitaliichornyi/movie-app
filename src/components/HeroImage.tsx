@@ -28,8 +28,6 @@ export default function HeroImage({
   vote_average,
   production_countries,
 }: HeroImageProps) {
-  console.log(genres);
-
   return (
     <section className="relative flex items-end w-full min-h-150 2xl:min-h-200">
       <div className="absolute -top-(--header-height) inset-0 -z-10">
