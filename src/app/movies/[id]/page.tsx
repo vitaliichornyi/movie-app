@@ -208,7 +208,7 @@ export default function MoviePage({
                       onClick={() => setIsOpened(!isOpened)}
                     />
                   </div>
-                  <div className="flex flex-4 flex-col">
+                  <div className="flex flex-4 flex-col pt-0 md:pt-14">
                     <RatingWidget
                       voteCount={Intl.NumberFormat('en-US').format(
                         data.vote_count,
