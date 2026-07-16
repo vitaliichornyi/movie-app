@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -16,27 +16,19 @@ interface CrewSliderProps {
 }
 
 export default function CrewSlider({ cast }: CrewSliderProps) {
-  const prevBtnRef = useRef<HTMLButtonElement>(null);
-  const nextBtnRef = useRef<HTMLButtonElement>(null);
-
-  const [, setSwiperReady] = useState(false);
+  const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
+  const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
   return (
     <div className="relative w-full">
-      <SliderNavButton btnRef={prevBtnRef} direction="prev" />
-      <SliderNavButton btnRef={nextBtnRef} direction="next" />
+      <SliderNavButton btnRef={setPrevEl} direction="prev" />
+      <SliderNavButton btnRef={setNextEl} direction="next" />
       <Swiper
         modules={[Navigation, FreeMode]}
         navigation={{
-          prevEl: prevBtnRef.current,
-          nextEl: nextBtnRef.current,
+          prevEl: prevEl,
+          nextEl: nextEl,
         }}
-        onBeforeInit={(swiper) => {
-          if (typeof swiper.params.navigation !== 'object') return;
-          swiper.params.navigation.prevEl = prevBtnRef.current;
-          swiper.params.navigation.nextEl = nextBtnRef.current;
-        }}
-        onInit={() => setSwiperReady(true)}
         freeMode={true}
         slidesPerView={'auto'}
         spaceBetween={24}

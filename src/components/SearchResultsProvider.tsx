@@ -91,6 +91,8 @@ export default function SearchResultsProvider({
                   index={index}
                   poster_path={item.poster_path}
                   title={item.title}
+                  vote_average={item.vote_average}
+                  genre_ids={item.genre_ids}
                 />
               ))}
             </div>

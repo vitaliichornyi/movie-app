@@ -1,9 +1,9 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, FreeMode } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -17,10 +17,8 @@ interface ReviewSliderProps {
   reviews: Reviews;
 }
 export default function ReviewSlider({ reviews }: ReviewSliderProps) {
-  const prevBtnRef = useRef<HTMLButtonElement>(null);
-  const nextBtnRef = useRef<HTMLButtonElement>(null);
-
-  const [, setSwiperReady] = useState(false);
+  const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
+  const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
   const router = useRouter();
 
@@ -35,27 +33,21 @@ export default function ReviewSlider({ reviews }: ReviewSliderProps) {
         </span>
       </div>
       <div className="relative w-full">
-        <SliderNavButton btnRef={prevBtnRef} direction="prev" />
-        <SliderNavButton btnRef={nextBtnRef} direction="next" />
+        <SliderNavButton btnRef={setPrevEl} direction="prev" />
+        <SliderNavButton btnRef={setNextEl} direction="next" />
         <Swiper
-          modules={[Navigation, FreeMode]}
+          modules={[Navigation]}
           navigation={{
-            prevEl: prevBtnRef.current,
-            nextEl: nextBtnRef.current,
+            prevEl: prevEl,
+            nextEl: nextEl,
           }}
-          onBeforeInit={(swiper) => {
-            if (typeof swiper.params.navigation !== 'object') return;
-            swiper.params.navigation.prevEl = prevBtnRef.current;
-            swiper.params.navigation.nextEl = nextBtnRef.current;
-          }}
-          onInit={() => setSwiperReady(true)}
-          freeMode={true}
           slidesPerView={1}
+          slidesPerGroup={1}
           spaceBetween={24}
           breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 4 },
-            1536: { slidesPerView: 6 },
+            640: { slidesPerView: 2, slidesPerGroup: 2 },
+            1024: { slidesPerView: 4, slidesPerGroup: 4 },
+            1536: { slidesPerView: 6, slidesPerGroup: 6 },
           }}
         >
           {reviews.results.map((review) => (

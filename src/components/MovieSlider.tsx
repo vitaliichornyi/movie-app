@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode } from 'swiper/modules';
@@ -9,7 +9,13 @@ import 'swiper/css/navigation';
 import PosterImage from './PosterImage';
 import SliderNavButton from './ui/SliderNavButton';
 
-import { Movie } from '../types/movies';
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  vote_average: number;
+  genre_ids: number[];
+}
 
 interface MovieSliderProps {
   items: Movie[];
@@ -23,42 +29,36 @@ export default function MovieSlider({
   isFetchingNextPage,
   fetchNextPage,
 }: MovieSliderProps) {
-  const prevBtnRef = useRef<HTMLButtonElement>(null);
-  const nextBtnRef = useRef<HTMLButtonElement>(null);
-
-  const [, setSwiperReady] = useState(false);
+  const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
+  const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
   function handleReachEnd() {
     if (isFetchingNextPage || !hasNextPage) return;
     fetchNextPage();
   }
 
+  console.log(items);
+
   return (
     <div className="relative w-full">
-      <SliderNavButton btnRef={prevBtnRef} direction="prev" />
-      <SliderNavButton btnRef={nextBtnRef} direction="next" />
+      <SliderNavButton btnRef={setPrevEl} direction="prev" />
+      <SliderNavButton btnRef={setNextEl} direction="next" />
       <Swiper
-        className="min-w-0"
         modules={[Navigation, FreeMode]}
         navigation={{
-          prevEl: prevBtnRef.current,
-          nextEl: nextBtnRef.current,
+          prevEl,
+          nextEl,
         }}
-        onBeforeInit={(swiper) => {
-          if (typeof swiper.params.navigation !== 'object') return;
-          swiper.params.navigation.prevEl = prevBtnRef.current;
-          swiper.params.navigation.nextEl = nextBtnRef.current;
-        }}
-        onInit={() => setSwiperReady(true)}
         freeMode={true}
         slidesPerView={3}
+        slidesPerGroup={3}
         spaceBetween={16}
         breakpoints={{
-          640: { slidesPerView: 4 },
-          768: { slidesPerView: 5 },
-          1024: { slidesPerView: 6 },
-          1280: { slidesPerView: 7 },
-          1536: { slidesPerView: 8 },
+          640: { slidesPerView: 4, slidesPerGroup: 4 },
+          768: { slidesPerView: 5, slidesPerGroup: 5 },
+          1024: { slidesPerView: 6, slidesPerGroup: 6 },
+          1280: { slidesPerView: 7, slidesPerGroup: 7 },
+          1536: { slidesPerView: 8, slidesPerGroup: 8 },
         }}
         onReachEnd={handleReachEnd}
       >
@@ -70,6 +70,8 @@ export default function MovieSlider({
               title={item.title}
               poster_path={item.poster_path}
               width={185}
+              vote_average={item.vote_average}
+              genre_ids={item.genre_ids}
             />
           </SwiperSlide>
         ))}

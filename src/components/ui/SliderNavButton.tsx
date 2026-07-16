@@ -4,7 +4,7 @@ import ChevronRightIcon from '@/src/icons/ChevronRightIcon';
 interface SliderNavButtonProps {
   heroSlider?: boolean;
   direction: 'prev' | 'next';
-  btnRef: React.RefObject<HTMLButtonElement | null>;
+  btnRef: React.Ref<HTMLButtonElement>;
 }
 
 export default function SliderNavButton({

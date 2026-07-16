@@ -107,6 +107,8 @@ export default function Movies() {
                   title={movie.title}
                   poster_path={movie.poster_path}
                   width={342}
+                  vote_average={movie.vote_average}
+                  genre_ids={movie.genre_ids}
                 />
               ))}
             </div>

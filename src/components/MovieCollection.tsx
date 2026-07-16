@@ -8,12 +8,12 @@ import StatusMessage from './StatusMessage';
 import MovieSlider from './MovieSlider';
 
 import { InfiniteServiceResult } from '@/src/types/services';
-import { Movie } from '@/src/types/movies';
+import { MovieExtended } from '@/src/types/movies';
 
 async function fetchMovieCollection(
   slug: string,
   pageParam: number,
-): Promise<InfiniteServiceResult<Movie[]>> {
+): Promise<InfiniteServiceResult<MovieExtended[]>> {
   const limit = 10;
   const response = await fetch(
     `/api/collections/${slug}?page=${pageParam}&limit=${limit}`,
@@ -52,8 +52,13 @@ export default function MovieCollection({
     });
 
   const collectionItems =
-    data?.pages.flatMap((page) => page.data).filter((item) => item !== null) ||
-    [];
+    data?.pages
+      .flatMap((page) => page.data)
+      .filter((item) => item !== null)
+      .map((movie) => ({
+        ...movie,
+        genre_ids: movie.genres ? movie.genres.map((g) => g.id) : [],
+      })) || [];
 
   const isFirstLoading = status === 'pending';
   const isError = status === 'error';
