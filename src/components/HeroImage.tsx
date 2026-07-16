@@ -29,21 +29,28 @@ export default function HeroImage({
   production_countries,
 }: HeroImageProps) {
   console.log(genres);
-  console.log(production_countries);
+
   return (
     <section className="relative flex items-end w-full min-h-150 2xl:min-h-200">
       <div className="absolute -top-(--header-height) inset-0 -z-10">
         <Image
-          src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
+          src={
+            backdrop_path
+              ? `https://image.tmdb.org/t/p/original${backdrop_path}`
+              : '/no-poster.jpg'
+          }
           fill
           priority
           unoptimized
           alt={title}
           className="object-cover object-center"
         />
-
-        <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/50 to-transparent" />
-        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/40 via-30% to-transparent" />
+        {backdrop_path && (
+          <>
+            <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/50 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/40 via-30% to-transparent" />
+          </>
+        )}
       </div>
       <div className="layout-wrap pb-10">
         <div className="flex flex-col items-center">
@@ -57,13 +64,18 @@ export default function HeroImage({
               </>
             )}
 
-            {genres.slice(0, 2).map((genre, index) => (
-              <React.Fragment key={genre.id}>
-                {index > 0 && <span>·</span>}
-                <span>{genre.name}</span>
-              </React.Fragment>
-            ))}
-            <span>·</span>
+            {genres.length !== 0 && (
+              <>
+                {genres.slice(0, 2).map((genre, index) => (
+                  <React.Fragment key={genre.id}>
+                    {index > 0 && <span>·</span>}
+                    <span>{genre.name}</span>
+                  </React.Fragment>
+                ))}
+                <span>·</span>
+              </>
+            )}
+
             <span className="flex gap-1">
               <StarIcon />
               {vote_average.toFixed(1)}
