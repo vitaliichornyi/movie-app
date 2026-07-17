@@ -61,7 +61,7 @@ export default function MovieSlider({
         onReachEnd={handleReachEnd}
       >
         {items.map((item, index) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={`${item.id}-${index}`}>
             <PosterImage
               index={index}
               id={item.id}
