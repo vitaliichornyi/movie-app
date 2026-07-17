@@ -4,9 +4,7 @@ import { useState } from 'react';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 import MovieSlider from './MovieSlider';
-import StatusMessage from './StatusMessage';
-import CollectionSliderSkeleton from './skeletons/CollectionSliderSkeleton';
-import Headline from './ui/Headline';
+import MovieSliderSkeleton from './skeletons/MovieSliderSkeleton';
 
 interface RelatedMoviesProps {
   title: string;
@@ -58,21 +56,22 @@ export default function RelatedMovies({
   const isFirstLoading = status === 'pending';
   const isError = status === 'error';
   const hasMovie = items && items.length > 0;
-  const isReady = !isError && !isFirstLoading;
+  const isReady = shouldLoad && !isError && !isFirstLoading;
+
+  async function handleReachEnd() {
+    if (isFetchingNextPage || !hasNextPage) return;
+    await fetchNextPage();
+  }
 
   return (
-    <section ref={triggerRef}>
-      <Headline as="h2" variant="h2">
-        {title}
-      </Headline>
-      {isFirstLoading && <CollectionSliderSkeleton />}
-      {isError && <StatusMessage type="error" />}
-      {isReady && !hasMovie && <StatusMessage type="empty" />}
+    <section className={isReady && !hasMovie ? 'hidden' : ''} ref={triggerRef}>
+      {isFirstLoading && <MovieSliderSkeleton />}
       {isReady && hasMovie && (
         <MovieSlider
           items={items}
+          title={title}
           hasNextPage={hasNextPage}
-          fetchNextPage={fetchNextPage}
+          fetchNextPage={handleReachEnd}
           isFetchingNextPage={isFetchingNextPage}
         />
       )}

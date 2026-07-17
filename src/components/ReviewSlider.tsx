@@ -13,7 +13,6 @@ import ShowMoreButton from './ui/ShowMoreButton';
 import Headline from './ui/Headline';
 import SliderNavButton from './ui/SliderNavButton';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import LoadingContainer from './LoadingContainer';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import ReviewSliderSkeleton from './skeletons/ReviewSliderSkeleton';
 
@@ -102,60 +101,64 @@ export default function ReviewSlider({ title, movieId }: ReviewSliderProps) {
       ref={triggerRef}
       className={isReady && !hasResults ? 'hidden' : ''}
     >
-      <Headline as="h2" variant="h2" totalResults={totalReviews}>
-        {title}
-      </Headline>
       {isFirstLoading && <ReviewSliderSkeleton />}
       {isReady && hasResults && (
-        <div className="relative w-full">
-          <SliderNavButton btnRef={setPrevEl} direction="prev" />
-          <SliderNavButton btnRef={setNextEl} direction="next" />
-          <Swiper
-            modules={[Navigation]}
-            navigation={{
-              prevEl: prevEl,
-              nextEl: nextEl,
-            }}
-            slidesPerView={1}
-            slidesPerGroup={1}
-            spaceBetween={24}
-            breakpoints={{
-              640: { slidesPerView: 2, slidesPerGroup: 2 },
-              1024: { slidesPerView: 4, slidesPerGroup: 4 },
-              1536: { slidesPerView: 6, slidesPerGroup: 6 },
-            }}
-            onReachEnd={handleReachEnd}
-          >
-            {reviewResults.map((review, index) => (
-              <SwiperSlide
-                key={`${review.id}-${index}`}
-                className="px-6 py-6 rounded-2xl bg-surface-container"
-              >
-                <div className="flex flex-col">
-                  <span className="text-sm font-bold text-on-surface-variant">
-                    {review.author}
-                  </span>
-                  <div className="pb-4">
-                    <p className="line-clamp-3">{review.content}</p>
-                    {/* <ShowMoreButton onClick={() => router.push('/')} /> */}
+        <>
+          <Headline as="h2" variant="h2" totalResults={totalReviews}>
+            {title}
+          </Headline>
+          <div className="relative w-full">
+            <SliderNavButton btnRef={setPrevEl} direction="prev" />
+            <SliderNavButton btnRef={setNextEl} direction="next" />
+            <Swiper
+              modules={[Navigation]}
+              navigation={{
+                prevEl: prevEl,
+                nextEl: nextEl,
+              }}
+              slidesPerView={1}
+              slidesPerGroup={1}
+              spaceBetween={24}
+              breakpoints={{
+                640: { slidesPerView: 2, slidesPerGroup: 2 },
+                1024: { slidesPerView: 4, slidesPerGroup: 4 },
+                1536: { slidesPerView: 6, slidesPerGroup: 6 },
+              }}
+              onReachEnd={handleReachEnd}
+            >
+              {reviewResults.map((review, index) => (
+                <SwiperSlide
+                  key={`${review.id}-${index}`}
+                  className="px-6 py-6 rounded-2xl bg-surface-container"
+                >
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-on-surface-variant">
+                      {review.author}
+                    </span>
+                    <div className="pb-4">
+                      <p className="line-clamp-3">{review.content}</p>
+                      {/* <ShowMoreButton onClick={() => router.push('/')} /> */}
+                    </div>
+                    <span className="text-sm text-on-surface-variant">
+                      {Intl.DateTimeFormat('en-US', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      }).format(new Date(review.created_at))}
+                    </span>
                   </div>
-                  <span className="text-sm text-on-surface-variant">
-                    {Intl.DateTimeFormat('en-US', {
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric',
-                    }).format(new Date(review.created_at))}
-                  </span>
-                </div>
-              </SwiperSlide>
-            ))}
-            {isFetchingNextPage && (
-              <div className="flex items-center justify-center w-full h-44">
-                <div className="animate-spin h-5 w-5 rounded-full border-2 border-current border-t-transparent" />
-              </div>
-            )}
-          </Swiper>
-        </div>
+                </SwiperSlide>
+              ))}
+              {isFetchingNextPage && (
+                <SwiperSlide key="next-page-loader">
+                  <div className="flex items-center justify-center w-full h-44">
+                    <div className="animate-spin h-5 w-5 rounded-full border-2 border-current border-t-transparent" />
+                  </div>
+                </SwiperSlide>
+              )}
+            </Swiper>
+          </div>
+        </>
       )}
     </section>
   );
