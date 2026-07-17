@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import LoadingContainer from '@/src/components/LoadingContainer';
 import StatusMessage from '@/src/components/StatusMessage';
-import CrewSlider from '@/src/components/CrewSlider';
+import CreditsSlider from '@/src/components/CreditsSlider';
 
 import RatingWidget from '@/src/components/RatingWidget';
 import ShowMoreButton from '@/src/components/ui/ShowMoreButton';
@@ -43,14 +43,6 @@ export default function MoviePage({
   const [isOpened, setIsOpened] = useState(false);
 
   const movieInfo: MovieInfoItem[] = [
-    {
-      id: 1,
-      label: 'Director',
-      value:
-        data?.credits?.crew
-          ?.filter((person) => person.job === 'Director')
-          ?.map((person) => person.name) || [],
-    },
     {
       id: 2,
       label: 'Genres',
@@ -134,13 +126,7 @@ export default function MoviePage({
                 type="similar"
                 title="Related movies"
               />
-              <section>
-                <Headline as="h2" variant="h2">
-                  Cast
-                </Headline>
-                <CrewSlider cast={data.credits.cast} />
-              </section>
-
+              <CreditsSlider movieId={data.id} title="Cast" />
               <section>
                 <div className="flex flex-col md:flex-row gap-8">
                   <div className="flex flex-8 flex-col gap-2">
@@ -166,13 +152,11 @@ export default function MoviePage({
                   </div>
                 </div>
               </section>
-              {data.reviews.results.length > 0 && (
-                <ReviewSlider reviews={data.reviews} />
-              )}
+              <ReviewSlider movieId={data.id} title="Reviews" />
             </div>
+            <MovieCollectionGrid />
           </>
         )}
-        <MovieCollectionGrid />
       </>
     </main>
   );

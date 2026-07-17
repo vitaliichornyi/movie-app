@@ -27,19 +27,9 @@ export interface MovieExtended extends Omit<Movie, 'genre_ids'> {
   revenue: number;
   runtime: number | null;
   production_countries: ProductionCountries[];
-  credits: Credits;
   spoken_languages: SpokenLanguages[];
-  reviews: Reviews;
 }
 
-export interface Reviews {
-  page: number;
-  results: ReviewResults[];
-  total_pages: number;
-  total_results: number;
-}
-
-//Remove
 export interface ReviewResults {
   author: string;
   content: string;
