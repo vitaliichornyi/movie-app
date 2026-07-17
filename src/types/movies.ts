@@ -39,7 +39,8 @@ export interface Reviews {
   total_results: number;
 }
 
-interface ReviewResults {
+//Remove
+export interface ReviewResults {
   author: string;
   content: string;
   created_at: string;
@@ -63,7 +64,7 @@ export interface ProductionCountries {
   name: string;
 }
 
-interface Credits {
+export interface Credits {
   cast: Cast[];
   crew: Crew[];
 }
