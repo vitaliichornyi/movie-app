@@ -10,6 +10,7 @@ import BookmarkIcon from '../icons/BookmarkIcon';
 import PlayIcon from '../icons/PlayIcon';
 
 import { Genre, ProductionCountries } from '../types/movies';
+import Headline from './ui/Headline';
 
 interface HeroImageProps {
   title: string;
@@ -53,8 +54,10 @@ export default function HeroImage({
       <div className="layout-wrap pb-10">
         <div className="flex flex-col items-center">
           <Breadcrumbs dynamicTitle={title} />
-          <h1 className="title-1">{title}</h1>
-          <div className="flex py-2 gap-1 font-bold">
+          <Headline as="h1" variant="title1">
+            {title}
+          </Headline>
+          <div className="flex gap-1 pt-2 pb-4 font-bold">
             {releaseYear && (
               <>
                 <span>{releaseYear}</span>
@@ -86,7 +89,7 @@ export default function HeroImage({
               </Tag>
             ))}
           </div>
-          <div className="flex gap-2 pt-4">
+          <div className="flex gap-2 pt-6">
             <Button type="primary" size="md">
               <PlayIcon />
               Play

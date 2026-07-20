@@ -28,7 +28,3 @@ body {
   background-color: var(--color-surface);
   color: var(--color-on-surface);
 }
-
-@utility title-1 {
-  @apply text-center text-5xl! lg:text-6xl! font-bold;
-}
