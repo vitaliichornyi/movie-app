@@ -1,22 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function useDebouncedQuery() {
   const [inputValue, setInputValue] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
+
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (inputValue.trim().length < 2) {
       setDebouncedQuery('');
       return;
     }
-    const delayDebounce = setTimeout(() => {
+    timeoutRef.current = window.setTimeout(() => {
       setDebouncedQuery(inputValue);
     }, 500);
 
     return () => {
-      clearTimeout(delayDebounce);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [inputValue]);
 
-  return { inputValue, setInputValue, debouncedQuery };
+  const setInstantQuery = (value: string) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setInputValue(value);
+    setDebouncedQuery(value);
+  };
+
+  return { inputValue, setInputValue, debouncedQuery, setInstantQuery };
 }

@@ -29,13 +29,11 @@ export default function StatusMessage({
   const { title: defaultTitle, message: defaultMessage } = defaults[type];
 
   return (
-    <div className="flex items-center justify-center w-full h-140">
-      <div className="max-w-180 text-center">
-        <Headline as="h2" variant="h2">
-          {title ?? defaultTitle}
-        </Headline>
-        <p>{message ?? defaultMessage}</p>
-      </div>
+    <div className="flex flex-col items-center justify-center mx-auto w-full max-w-140 h-full min-h-100 text-center">
+      <Headline as="h3" variant="h3">
+        {title ?? defaultTitle}
+      </Headline>
+      <p className="text-on-surface-variant">{message ?? defaultMessage}</p>
     </div>
   );
 }

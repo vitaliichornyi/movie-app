@@ -16,6 +16,7 @@ interface PosterImageProps {
   width?: WidthType;
   vote_average: number;
   genre_ids: number[];
+  onClick?: () => void;
 }
 
 const movieGenres = [
@@ -48,12 +49,13 @@ export default function PosterImage({
   width = 500,
   vote_average,
   genre_ids,
+  onClick,
 }: PosterImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <div className="relative w-full aspect-2/3 rounded-2xl overflow-hidden">
-      <Link href={`/movies/${id}`}>
+      <Link href={`/movies/${id}`} onClick={onClick}>
         {!isLoaded && (
           <div className="absolute inset-0 animate-pulse bg-surface-container" />
         )}
