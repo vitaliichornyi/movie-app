@@ -30,7 +30,9 @@ export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
             <li className="flex items-center gap-2" key={href}>
               <span className="font-extrabold">·</span>
               {isLast ? (
-                <span className="text-on-surface-variant">{label}</span>
+                <span className="max-w-75 text-on-surface-variant truncate">
+                  {label}
+                </span>
               ) : (
                 <Link href={href}>{label}</Link>
               )}
