@@ -15,23 +15,31 @@ import Headline from './ui/Headline';
 interface HeroImageProps {
   title: string;
   backdrop_path: string | null;
-  releaseYear?: string;
+  releaseDate?: string;
   genres: Genre[];
   vote_average: number;
   production_countries: ProductionCountries[];
+  heroSlider?: boolean;
+  index?: number;
 }
 
 export default function HeroImage({
   title,
   backdrop_path,
-  releaseYear,
+  releaseDate,
   genres,
   vote_average,
   production_countries,
+  heroSlider = false,
+  index = 0,
 }: HeroImageProps) {
   return (
-    <section className="relative flex items-end w-full min-h-150 2xl:min-h-200">
-      <div className="absolute -top-(--header-height) inset-0 -z-10">
+    <div
+      className={`relative flex items-end w-full ${heroSlider ? 'h-full' : 'min-h-150 2xl:min-h-200'}`}
+    >
+      <div
+        className={`absolute inset-0 ${!heroSlider ? '-top-(--header-height)' : ''} -z-10`}
+      >
         <Image
           src={
             backdrop_path
@@ -39,7 +47,7 @@ export default function HeroImage({
               : '/no-poster.jpg'
           }
           fill
-          priority
+          priority={index === 0}
           unoptimized
           alt={title}
           className="object-cover object-center"
@@ -53,19 +61,23 @@ export default function HeroImage({
       </div>
       <div className="layout-wrap pb-10">
         <div className="flex flex-col items-center">
-          <Breadcrumbs dynamicTitle={title} className="justify-center" />
-          <Headline as="h1" variant="title1">
+          {!heroSlider && (
+            <Breadcrumbs dynamicTitle={title} className="justify-center" />
+          )}
+          <Headline
+            as={heroSlider ? 'h2' : 'h1'}
+            variant={heroSlider ? 'title2' : 'title1'}
+          >
             {title}
           </Headline>
-          <div className="flex items-center justify-center gap-1 min-w-0 w-full pt-2 pb-4 font-bold">
-            {releaseYear && (
+          <div className="flex items-center justify-center gap-1 w-full min-w-0 pb-4 font-bold">
+            {releaseDate && (
               <>
-                <span className="shrink-0">{releaseYear}</span>
+                <span className="shrink-0">{releaseDate.split('-')[0]}</span>
                 <span className="shrink-0">·</span>
               </>
             )}
-
-            {genres.length !== 0 && (
+            {genres.length > 0 && (
               <>
                 {genres.slice(0, 2).map((genre, index) => (
                   <React.Fragment key={genre.id}>
@@ -76,13 +88,12 @@ export default function HeroImage({
                 <span>·</span>
               </>
             )}
-
             <span className="flex gap-1 shrink-0">
               <StarIcon />
               {vote_average.toFixed(1)}
             </span>
           </div>
-          <div className="flex items-center justify-center min-w-0 w-full gap-1">
+          <div className="flex items-center justify-center w-full min-w-0 gap-1">
             {production_countries.slice(0, 2).map((country) => (
               <Tag key={country.iso_3166_1} isoCode={country.iso_3166_1}>
                 {country.name}
@@ -92,7 +103,7 @@ export default function HeroImage({
           <div className="flex gap-2 pt-6">
             <Button type="primary" size="md">
               <PlayIcon />
-              Play
+              Watch now
             </Button>
             <Button type="secondary" size="md">
               <BookmarkIcon />
@@ -100,6 +111,6 @@ export default function HeroImage({
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

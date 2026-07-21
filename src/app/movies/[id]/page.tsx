@@ -110,7 +110,7 @@ export default function MoviePage({
             <HeroImage
               title={data.title}
               backdrop_path={data.backdrop_path}
-              releaseYear={data.release_date && data.release_date.split('-')[0]}
+              releaseDate={data.release_date}
               genres={data.genres}
               vote_average={data.vote_average}
               production_countries={data.production_countries}

@@ -1,7 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import Image from 'next/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, Navigation } from 'swiper/modules';
@@ -14,12 +13,7 @@ import { MovieExtended } from '../types/movies';
 
 import HeroSliderSkeleton from './skeletons/HeroSliderSkeleton';
 import StatusMessage from './StatusMessage';
-import Headline from './ui/Headline';
-import Tag from './ui/Tag';
-import Button from './ui/Button';
-import StarIcon from '../icons/StarIcon';
-import PlayIcon from '../icons/PlayIcon';
-import BookmarkIcon from '../icons/BookmarkIcon';
+import HeroImage from './HeroImage';
 
 async function fetchCollection(slug: string): Promise<MovieExtended[]> {
   const response = await fetch(`/api/collections/${slug}`);
@@ -76,76 +70,18 @@ export default function HeroSlider({ slug }: { slug: string }) {
             {data.map((slide, index) => (
               <SwiperSlide
                 key={slide.id}
-                className="relative max-w-100 md:max-w-180 lg:max-w-240 2xl:max-w-7xl"
+                className="max-w-100 md:max-w-180 lg:max-w-240 2xl:max-w-7xl rounded-2xl overflow-hidden"
               >
-                <div className="absolute inset-0 rounded-2xl overflow-hidden -z-20">
-                  <Image
-                    className="object-cover object-center -z-10"
-                    src={
-                      slide.backdrop_path
-                        ? `https://image.tmdb.org/t/p/original${slide.backdrop_path}`
-                        : '/no-poster.jpg'
-                    }
-                    fill
-                    priority={index === 0}
-                    unoptimized
-                    alt={slide.title}
-                  />
-                  {slide.backdrop_path && (
-                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/40 via-40% to-transparent" />
-                  )}
-                </div>
-                <div className="flex items-end h-full w-full px-6 pb-6">
-                  <div className="flex flex-col items-center w-full">
-                    <Headline as="h2" variant="title2">
-                      {slide.title}
-                    </Headline>
-                    <div className="flex items-center justify-center gap-1 min-w-0 w-full pt-2 pb-4 font-bold">
-                      {slide.release_date && (
-                        <>
-                          <span className="shrink-0">
-                            {slide.release_date.split('-')[0]}
-                          </span>
-                          <span className="shrink-0">·</span>
-                        </>
-                      )}
-                      {slide.genres.length > 0 && (
-                        <>
-                          {slide.genres.slice(0, 2).map((genre, index) => (
-                            <React.Fragment key={genre.id}>
-                              {index > 0 && <span className="shrink-0">·</span>}
-                              <span className="truncate">{genre.name}</span>
-                            </React.Fragment>
-                          ))}
-                          <span className="shrink-0">·</span>
-                        </>
-                      )}
-                      <span className="flex gap-1 shrink-0">
-                        <StarIcon />
-                        {slide.vote_average.toFixed(1)}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-center min-w-0 w-full gap-1">
-                      {slide.production_countries.slice(0, 2).map((country) => (
-                        <Tag
-                          key={country.iso_3166_1}
-                          isoCode={country.iso_3166_1}
-                        >
-                          {country.name}
-                        </Tag>
-                      ))}
-                    </div>
-                    <div className="flex gap-2 pt-6">
-                      <Button type="primary" size="md">
-                        <PlayIcon />
-                        Start watching
-                      </Button>
-                      <Button type="secondary" size="md">
-                        <BookmarkIcon />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                <HeroImage
+                  title={slide.title}
+                  backdrop_path={slide.backdrop_path}
+                  genres={slide.genres}
+                  vote_average={slide.vote_average}
+                  production_countries={slide.production_countries}
+                  releaseDate={slide.release_date}
+                  heroSlider
+                  index={index}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
