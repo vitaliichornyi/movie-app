@@ -205,7 +205,7 @@ export default function SearchResultsProvider({
             <div className="grid grid-cols-3 gap-4">
               {searchResults.map((item, index) => (
                 <PosterImage
-                  key={item.id}
+                  key={`${item.id}-${index}`}
                   id={item.id}
                   index={index}
                   poster_path={item.poster_path}
