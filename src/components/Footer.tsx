@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="layout-wrap flex flex-col md:flex-row justify-between items-center gap-6 py-20">
       <Logo size="sm" />
       <nav>
-        <ul className="flex gap-6 md:gap-10 text-sm font-medium tracking-wide text-on-surface-variant">
+        <ul className="flex gap-4 md:gap-10 text-sm font-medium tracking-wide text-on-surface-variant">
           <li>
             <Link
               className="hover:text-on-surface transition"

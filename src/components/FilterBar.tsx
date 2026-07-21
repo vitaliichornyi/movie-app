@@ -94,7 +94,7 @@ export default function FilterBar({ filters, onFilterChange }: FilterBarProps) {
 
   return (
     <section className="mb-6">
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 p-4 rounded-3xl bg-surface-container">
+      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-2 p-4 rounded-3xl bg-surface-container">
         {selectorConfig.map((selector) => (
           <SelectInput
             key={selector.id}

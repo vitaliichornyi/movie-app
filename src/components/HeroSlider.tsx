@@ -76,7 +76,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
             {data.map((slide, index) => (
               <SwiperSlide
                 key={slide.id}
-                className="relative max-w-100 md:max-w-180 lg:max-w-240"
+                className="relative max-w-100 md:max-w-180 lg:max-w-240 2xl:max-w-7xl"
               >
                 <div className="absolute inset-0 rounded-2xl overflow-hidden -z-20">
                   <Image
@@ -100,30 +100,32 @@ export default function HeroSlider({ slug }: { slug: string }) {
                     <Headline as="h2" variant="title2">
                       {slide.title}
                     </Headline>
-                    <div className="flex gap-1 pt-2 pb-4 font-bold">
+                    <div className="flex items-center justify-center gap-1 min-w-0 w-full pt-2 pb-4 font-bold">
                       {slide.release_date && (
                         <>
-                          <span>{slide.release_date.split('-')[0]}</span>
-                          <span>·</span>
+                          <span className="shrink-0">
+                            {slide.release_date.split('-')[0]}
+                          </span>
+                          <span className="shrink-0">·</span>
                         </>
                       )}
                       {slide.genres.length > 0 && (
                         <>
                           {slide.genres.slice(0, 2).map((genre, index) => (
                             <React.Fragment key={genre.id}>
-                              {index > 0 && <span>·</span>}
-                              <span>{genre.name}</span>
+                              {index > 0 && <span className="shrink-0">·</span>}
+                              <span className="truncate">{genre.name}</span>
                             </React.Fragment>
                           ))}
-                          <span>·</span>
+                          <span className="shrink-0">·</span>
                         </>
                       )}
-                      <span className="flex gap-1">
+                      <span className="flex gap-1 shrink-0">
                         <StarIcon />
                         {slide.vote_average.toFixed(1)}
                       </span>
                     </div>
-                    <div className="flex gap-1">
+                    <div className="flex items-center justify-center min-w-0 w-full gap-1">
                       {slide.production_countries.slice(0, 2).map((country) => (
                         <Tag
                           key={country.iso_3166_1}

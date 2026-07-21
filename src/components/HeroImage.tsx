@@ -53,15 +53,15 @@ export default function HeroImage({
       </div>
       <div className="layout-wrap pb-10">
         <div className="flex flex-col items-center">
-          <Breadcrumbs dynamicTitle={title} />
+          <Breadcrumbs dynamicTitle={title} className="justify-center" />
           <Headline as="h1" variant="title1">
             {title}
           </Headline>
-          <div className="flex gap-1 pt-2 pb-4 font-bold">
+          <div className="flex items-center justify-center gap-1 min-w-0 w-full pt-2 pb-4 font-bold">
             {releaseYear && (
               <>
-                <span>{releaseYear}</span>
-                <span>·</span>
+                <span className="shrink-0">{releaseYear}</span>
+                <span className="shrink-0">·</span>
               </>
             )}
 
@@ -69,20 +69,20 @@ export default function HeroImage({
               <>
                 {genres.slice(0, 2).map((genre, index) => (
                   <React.Fragment key={genre.id}>
-                    {index > 0 && <span>·</span>}
-                    <span>{genre.name}</span>
+                    {index > 0 && <span className="shrink-0">·</span>}
+                    <span className="truncate">{genre.name}</span>
                   </React.Fragment>
                 ))}
                 <span>·</span>
               </>
             )}
 
-            <span className="flex gap-1">
+            <span className="flex gap-1 shrink-0">
               <StarIcon />
               {vote_average.toFixed(1)}
             </span>
           </div>
-          <div className="flex gap-1">
+          <div className="flex items-center justify-center min-w-0 w-full gap-1">
             {production_countries.slice(0, 2).map((country) => (
               <Tag key={country.iso_3166_1} isoCode={country.iso_3166_1}>
                 {country.name}

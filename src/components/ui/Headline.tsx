@@ -13,7 +13,7 @@ const styles = {
   title2:
     'text-[2.6rem] leading-11 lg:text-[2.8rem] lg:leading-12 font-bold tracking-tight text-center mb-2 line-clamp-3 ',
   h1: 'text-[2.4rem] font-bold tracking-tight pb-4 ',
-  h2: 'text-[1.8rem] font-bold tracking-tight pb-4 pt-12',
+  h2: 'text-[1.8rem] leading-8 font-bold tracking-tight mb-4 mt-12 line-clamp-2',
   h3: 'text-[1.4rem] font-bold tracking-normal',
 };
 export default function Headline({

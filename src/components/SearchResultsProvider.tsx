@@ -166,7 +166,9 @@ export default function SearchResultsProvider({
                   onClick={() => setInstantQuery(item.title)}
                 >
                   <HistoryIcon />
-                  <span className="text-on-surface truncate">{item.title}</span>
+                  <span className="max-w-[75%] text-on-surface truncate">
+                    {item.title}
+                  </span>
                 </button>
                 <IconButton
                   onClick={() => handleDeleteSuggestion(item.id)}

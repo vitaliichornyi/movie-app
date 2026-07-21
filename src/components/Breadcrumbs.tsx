@@ -5,16 +5,20 @@ import Link from 'next/link';
 
 interface BreadcrumbsProps {
   dynamicTitle?: string;
+  className?: string;
 }
 
-export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
+export default function Breadcrumbs({
+  dynamicTitle,
+  className = '',
+}: BreadcrumbsProps) {
   const pathname = usePathname();
   const segments = pathname.split('/').filter(Boolean);
 
   return (
-    <nav>
-      <ul className="flex py-2 gap-2 text-on-surface">
-        <li>
+    <nav className="w-full py-2">
+      <ul className={`flex gap-2 min-w-0 w-full text-on-surface ${className}`}>
+        <li className="shrink-0">
           <Link href="/">Home</Link>
         </li>
         {segments.map((segment, index) => {
@@ -27,14 +31,19 @@ export default function Breadcrumbs({ dynamicTitle }: BreadcrumbsProps) {
               : segment.charAt(0).toUpperCase() + segment.slice(1);
 
           return (
-            <li className="flex items-center gap-2" key={href}>
-              <span className="font-extrabold">·</span>
+            <li
+              className={`flex gap-2 ${isLast ? 'min-w-0' : 'shrink-0'}`}
+              key={href}
+            >
+              <span className="font-extrabold shrink-0">·</span>
               {isLast ? (
-                <span className="max-w-75 text-on-surface-variant truncate">
+                <span className="text-on-surface-variant truncate">
                   {label}
                 </span>
               ) : (
-                <Link href={href}>{label}</Link>
+                <Link className="shrink-0" href={href}>
+                  {label}
+                </Link>
               )}
             </li>
           );

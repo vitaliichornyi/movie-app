@@ -8,7 +8,7 @@ interface TagProps {
 export default function Tag({ isoCode, children }: TagProps) {
   return (
     <Link
-      className="text-sm px-2 py-0.5 rounded-full bg-secondary hover:bg-secondary-hover backdrop-blur-xs transition text-on-surface"
+      className="text-sm px-2 py-0.5 rounded-full truncate bg-secondary hover:bg-secondary-hover backdrop-blur-xs transition text-on-surface transcate"
       href={`/movies?with_origin_country=${isoCode}`}
     >
       {children}
