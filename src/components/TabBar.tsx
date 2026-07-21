@@ -31,7 +31,7 @@ const tabBarItems = [
     id: 4,
     label: 'Profile',
     icon: <ProfileIcon />,
-    href: '/profile',
+    href: '/',
   },
 ];
 
