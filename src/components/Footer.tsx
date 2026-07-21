@@ -8,7 +8,7 @@ import ThreadsIcon from '../icons/socialmedia/ThreadsIcon';
 
 export default function Footer() {
   return (
-    <footer className="layout-wrap flex flex-col md:flex-row justify-between items-center gap-6 pb-34 pt-24">
+    <footer className="layout-wrap flex flex-col md:flex-row justify-between items-center gap-6 py-20">
       <Logo size="sm" />
       <nav>
         <ul className="flex gap-6 md:gap-10 text-sm font-medium tracking-wide text-on-surface-variant">

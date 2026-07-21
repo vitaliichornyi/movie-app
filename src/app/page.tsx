@@ -3,7 +3,7 @@ import MovieCollectionGrid from '../components/MovieCollectionGrid';
 
 export default function Home() {
   return (
-    <main>
+    <main className="grow">
       <HeroSlider slug="hero-slider" />
       <MovieCollectionGrid />
     </main>

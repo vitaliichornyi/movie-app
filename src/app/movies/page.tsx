@@ -84,7 +84,7 @@ export default function Movies() {
   const emptyResponse = !hasMovie && !isError && !isFirstLoading;
 
   return (
-    <main className="layout-wrap">
+    <main className="layout-wrap grow">
       <Breadcrumbs />
       <Headline as="h1" variant="h1">
         Movies

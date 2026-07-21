@@ -101,7 +101,7 @@ export default function MoviePage({
   ];
 
   return (
-    <main>
+    <main className="grow">
       <>
         {isLoading && <LoadingContainer />}
         {error && <StatusMessage type="error" />}
