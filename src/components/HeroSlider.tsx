@@ -12,8 +12,8 @@ import SliderNavButton from './ui/SliderNavButton';
 import { MovieExtended } from '../types/movies';
 
 import HeroSliderSkeleton from './skeletons/HeroSliderSkeleton';
-import StatusMessage from './StatusMessage';
 import HeroImage from './HeroImage';
+import HeroSliderFallback from './HeroSliderFallback';
 
 async function fetchCollection(slug: string): Promise<MovieExtended[]> {
   const response = await fetch(`/api/collections/${slug}`);
@@ -33,14 +33,14 @@ export default function HeroSlider({ slug }: { slug: string }) {
   const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
   const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
+  const isReady = !isLoading;
   const hasData = data && data.length > 0;
-  const isReady = !isLoading && !error;
+  const hasIssue = error || !hasData;
 
   return (
     <section>
       {isLoading && <HeroSliderSkeleton />}
-      {error && <StatusMessage type="error" />}
-      {isReady && !hasData && <StatusMessage type="empty" />}
+      {isReady && hasIssue && <HeroSliderFallback />}
       {isReady && hasData && (
         <div className="relative w-full">
           <SliderNavButton btnRef={setPrevEl} direction="prev" heroSlider />
@@ -60,7 +60,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
               prevEl,
               nextEl,
             }}
-            slidesPerView={'auto'}
+            slidesPerView={hasIssue ? 1 : 'auto'}
             spaceBetween={24}
             loop={true}
             centeredSlides={true}
