@@ -8,9 +8,11 @@ interface HeadlineProps {
 }
 
 const styles = {
-  title1: 'text-5xl lg:text-6xl font-bold tracking-tight text-center pb-1',
-  title2: 'text-4xl lg:text-5xl font-bold tracking-tight text-center pb-1',
-  h1: 'text-[2.4rem] font-bold tracking-tight pb-4 pt-6',
+  title1:
+    'text-5xl lg:text-6xl font-bold tracking-tight text-center pb-2 line-clamp-3',
+  title2:
+    'text-[2.6rem] leading-11 lg:text-[2.8rem] lg:leading-12 font-bold tracking-tight text-center mb-2 line-clamp-3 ',
+  h1: 'text-[2.4rem] font-bold tracking-tight pb-4 ',
   h2: 'text-[1.8rem] font-bold tracking-tight pb-4 pt-12',
   h3: 'text-[1.4rem] font-bold tracking-normal',
 };
