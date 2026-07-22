@@ -1,6 +1,6 @@
 import { createClient } from '../utils/supabase/server';
 
-import { Collection, CollectionItemsParams } from '../types/collections';
+import { Collection } from '../types/collections';
 import { InfiniteServiceResult, ServiceResult } from '../types/services';
 import { Movie } from '../types/movies';
 
@@ -26,11 +26,11 @@ export async function getCollections(): Promise<ServiceResult<Collection[]>> {
   }
 }
 
-export async function getCollectionItemsPageBySlug({
-  slug,
-  page,
-  limit,
-}: CollectionItemsParams): Promise<InfiniteServiceResult<Movie[]>> {
+export async function getCollectionItemsPageBySlug(
+  slug: string,
+  page: number,
+  limit: number,
+): Promise<InfiniteServiceResult<Movie[]>> {
   try {
     const supabase = await createClient();
 
@@ -70,9 +70,9 @@ export async function getCollectionItemsPageBySlug({
   }
 }
 
-export async function getAllCollectionItemsBySlug({
-  slug,
-}: CollectionItemsParams): Promise<ServiceResult<Movie[]>> {
+export async function getAllCollectionItemsBySlug(
+  slug: string,
+): Promise<ServiceResult<Movie[]>> {
   try {
     const supabase = await createClient();
 

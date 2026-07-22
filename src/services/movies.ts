@@ -30,17 +30,17 @@ export async function getMovies(
         'with_origin_country',
         queryParams.with_origin_country,
       );
-    if (queryParams.primary_release_year)
+    if (queryParams.primary_release_year !== undefined)
       searchParams.append(
         'primary_release_year',
-        queryParams.primary_release_year,
+        queryParams.primary_release_year.toString(),
       );
-    if (queryParams.vote_average)
+    if (queryParams.vote_average !== undefined)
       searchParams.append(
         'vote_average.gte',
         queryParams.vote_average.toString(),
       );
-    if (queryParams.page)
+    if (queryParams.page !== undefined)
       searchParams.append('page', queryParams.page.toString());
     if (queryParams.sort_by)
       searchParams.append('sort_by', queryParams.sort_by);
