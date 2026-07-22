@@ -1,21 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { MovieExtended } from '@/src/types/movies';
 
 import LoadingContainer from '@/src/components/LoadingContainer';
 import StatusMessage from '@/src/components/StatusMessage';
-import CreditsSlider from '@/src/components/CreditsSlider';
-
-import RatingWidget from '@/src/components/RatingWidget';
-import ShowMoreButton from '@/src/components/ui/ShowMoreButton';
-import ReviewSlider from '@/src/components/ReviewSlider';
-import RelatedMovies from '@/src/components/RelatedMovies';
-import MovieCollectionGrid from '@/src/components/MovieCollectionGrid';
-import Headline from '@/src/components/ui/Headline';
 import HeroImage from '@/src/components/HeroImage';
-import MovieInfoList, { MovieInfoItem } from '@/src/components/MovieInfoList';
-import { MovieExtended } from '@/src/types/movies';
+import RelatedMovies from '@/src/components/RelatedMovies';
+import CreditsSlider from '@/src/components/CreditsSlider';
+import MovieSummary from '@/src/components/MovieSummary';
+import ReviewSlider from '@/src/components/ReviewSlider';
+import MovieCollectionGrid from '@/src/components/MovieCollectionGrid';
 
 async function fetchMovieDetailsByID(id: string): Promise<MovieExtended> {
   const response = await fetch(`/api/movies/${id}`);
@@ -39,66 +35,6 @@ export default function MoviePage({
     queryKey: ['movie', id],
     queryFn: () => fetchMovieDetailsByID(id),
   });
-
-  const [isOpened, setIsOpened] = useState(false);
-
-  const movieInfo: MovieInfoItem[] = [
-    {
-      id: 2,
-      label: 'Genres',
-      value: data?.genres?.map((genre) => genre.name) || [],
-    },
-    {
-      id: 3,
-      label: 'Release date',
-      value: data?.release_date
-        ? new Date(data.release_date.replace(/-/g, '/')).toLocaleDateString(
-            'en-US',
-            {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric',
-            },
-          )
-        : 'Unknown',
-    },
-    {
-      id: 4,
-      label: 'Country',
-      value: data?.production_countries?.map((country) => country.name) || [],
-    },
-    {
-      id: 5,
-      label: 'Budget',
-      value:
-        data?.budget && data?.budget !== 0
-          ? data.budget.toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD',
-              maximumFractionDigits: 0,
-            })
-          : 'Unknown',
-    },
-    {
-      id: 6,
-      label: 'Revenue',
-      value:
-        data?.revenue && data?.revenue !== 0
-          ? data.revenue.toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD',
-              maximumFractionDigits: 0,
-            })
-          : 'Unknown',
-    },
-    {
-      id: 7,
-      label: 'Runtime',
-      value: data?.runtime
-        ? `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m`
-        : 'Unknown',
-    },
-  ];
 
   return (
     <main className="grow">
@@ -127,31 +63,7 @@ export default function MoviePage({
                 title="Related movies"
               />
               <CreditsSlider movieId={data.id} title="Cast" />
-              <section>
-                <div className="flex flex-col md:flex-row gap-8">
-                  <div className="flex flex-8 flex-col gap-2">
-                    <div className="w-full md:max-w-170">
-                      <Headline as="h2" variant="h2">
-                        Overview
-                      </Headline>
-                      <p>{data.overview}</p>
-                    </div>
-                    {isOpened && <MovieInfoList items={movieInfo} />}
-                    <ShowMoreButton
-                      isOpened={isOpened}
-                      onClick={() => setIsOpened(!isOpened)}
-                    />
-                  </div>
-                  <div className="flex flex-4 flex-col pt-0 md:pt-14">
-                    <RatingWidget
-                      voteCount={Intl.NumberFormat('en-US').format(
-                        data.vote_count,
-                      )}
-                      voteAverage={data.vote_average.toFixed(1)}
-                    />
-                  </div>
-                </div>
-              </section>
+              <MovieSummary data={data} />
               <ReviewSlider movieId={data.id} title="Reviews" />
             </div>
             <MovieCollectionGrid />
