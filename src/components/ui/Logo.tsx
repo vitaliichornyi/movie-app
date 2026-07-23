@@ -7,7 +7,7 @@ interface LogoProps {
 
 const logoDimensions = {
   sm: { width: 110, height: 30 },
-  md: { width: 128, height: 35 },
+  md: { width: 124, height: 33 },
 };
 
 export default function Logo({ size = 'md' }: LogoProps) {
