@@ -7,11 +7,11 @@ import MovieInfoList, { MovieInfoItem } from './MovieInfoList';
 import ShowMoreButton from './ui/ShowMoreButton';
 import RatingWidget from './RatingWidget';
 
-interface MovieSummary {
+interface MovieSummaryProps {
   data: MovieExtended;
 }
 
-export default function MovieSummary({ data }: MovieSummary) {
+export default function MovieSummary({ data }: MovieSummaryProps) {
   const [isOpened, setIsOpened] = useState(false);
 
   const movieInfo: MovieInfoItem[] = [
