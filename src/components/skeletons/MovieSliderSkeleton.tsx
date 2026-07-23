@@ -2,7 +2,7 @@ export default function MovieSliderSkeleton() {
   const placeholders = Array.from({ length: 20 });
   return (
     <div className="flex flex-col">
-      <div className="w-40 h-6 mt-14.5 mb-6.5 rounded-2xl animate-pulse bg-surface-container"></div>
+      <div className="w-40 h-6 mt-14.5 mb-3.5 rounded-2xl animate-pulse bg-surface-container"></div>
       <div
         className="grid grid-flow-col overflow-hidden gap-4 
         auto-cols-[calc((100%-2*16px)/3)]
