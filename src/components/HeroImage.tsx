@@ -1,14 +1,10 @@
 import Image from 'next/image';
 import React from 'react';
-
-import Breadcrumbs from './Breadcrumbs';
 import Tag from './ui/Tag';
 import Button from './ui/Button';
-
 import StarIcon from '../icons/StarIcon';
 import BookmarkIcon from '../icons/BookmarkIcon';
 import PlayIcon from '../icons/PlayIcon';
-
 import { Genre, ProductionCountries } from '../types/movies';
 import Headline from './ui/Headline';
 
@@ -61,9 +57,6 @@ export default function HeroImage({
       </div>
       <div className="layout-wrap pb-10">
         <div className="flex flex-col items-center">
-          {!heroSlider && (
-            <Breadcrumbs dynamicTitle={title} className="justify-center" />
-          )}
           <Headline
             as={heroSlider ? 'h2' : 'h1'}
             variant={heroSlider ? 'title2' : 'title1'}

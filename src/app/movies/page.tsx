@@ -3,7 +3,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import useIntersectionObserver from '@/src/hooks/useIntersectionObserver';
 
-import Breadcrumbs from '@/src/components/Breadcrumbs';
 import FilterBar from '@/src/components/FilterBar';
 import MoviesSkeleton from '@/src/components/skeletons/MoviesSkeleton';
 import StatusMessage from '@/src/components/StatusMessage';
@@ -61,6 +60,7 @@ export default function Movies() {
     data,
     isPending,
     isError,
+    isSuccess,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -79,10 +79,10 @@ export default function Movies() {
 
   const movieList = data?.pages.flatMap((page) => page.results) || [];
   const hasMovies = movieList.length > 0;
+  const hasNoMovies = isSuccess && !hasMovies;
 
   return (
     <main className="layout-wrap grow">
-      <Breadcrumbs />
       <Headline as="h1" variant="h1">
         Movies
       </Headline>
@@ -90,13 +90,13 @@ export default function Movies() {
       <section>
         {isPending && <MoviesSkeleton />}
         {isError && <StatusMessage type="error" />}
-        {!hasMovies && <StatusMessage type="empty" />}
+        {hasNoMovies && <StatusMessage type="empty" />}
         {hasMovies && (
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
               {movieList.map((movie, index) => (
                 <PosterImage
-                  key={movie.id}
+                  key={`${movie.id}-${index}`}
                   index={index}
                   id={movie.id}
                   title={movie.title}
