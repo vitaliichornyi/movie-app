@@ -51,16 +51,13 @@ export default function HeroImage({
         {backdrop_path && (
           <>
             <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/50 to-transparent" />
-            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/40 via-30% to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/72 via-black/60 via-30% to-transparent" />
           </>
         )}
       </div>
       <div className="layout-wrap pb-10">
         <div className="flex flex-col items-center">
-          <Headline
-            as={heroSlider ? 'h2' : 'h1'}
-            variant={heroSlider ? 'title2' : 'title1'}
-          >
+          <Headline as={heroSlider ? 'h2' : 'h1'} variant="title1">
             {title}
           </Headline>
           <div className="flex items-center justify-center gap-1 w-full min-w-0 pb-4 font-bold">

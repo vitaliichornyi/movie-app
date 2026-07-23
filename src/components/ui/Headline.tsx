@@ -2,19 +2,16 @@ import { ElementType } from 'react';
 
 interface HeadlineProps {
   as: ElementType;
-  variant: 'title1' | 'title2' | 'h1' | 'h2' | 'h3';
+  variant: 'title1' | 'h1' | 'h2';
   children: React.ReactNode;
   totalResults?: number;
 }
 
 const styles = {
   title1:
-    'text-5xl lg:text-6xl font-bold tracking-tight text-center pb-2 line-clamp-3',
-  title2:
-    'text-[2.6rem] leading-11 lg:text-[2.8rem] lg:leading-12 font-bold tracking-tight text-center mb-2 line-clamp-3 ',
-  h1: 'text-[2.4rem] font-bold tracking-tight pb-4 ',
-  h2: 'text-[1.8rem] leading-8 font-bold tracking-tight mb-4 mt-12 line-clamp-2',
-  h3: 'text-[1.4rem] font-bold tracking-normal',
+    'text-[2.6rem] leading-11 lg:text-[2.8rem] lg:leading-12 font-bold tracking-tight text-center mb-4 line-clamp-3',
+  h1: 'text-[2.2rem] leading-10 font-bold tracking-tight mt-2 mb-4 ',
+  h2: 'text-[1.8rem] leading-8 font-bold tracking-tight mt-12 mb-4 line-clamp-2',
 };
 export default function Headline({
   as: Headline,
