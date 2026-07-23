@@ -47,8 +47,10 @@ export default function ReviewSlider({ title, movieId }: ReviewSliderProps) {
 
   const {
     data,
-    status,
     error,
+    isPending,
+    isError,
+    isSuccess,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -66,13 +68,11 @@ export default function ReviewSlider({ title, movieId }: ReviewSliderProps) {
     },
   });
 
-  const reviewResults = data?.pages.flatMap((page) => page.results) || [];
+  const reviewList = data?.pages.flatMap((page) => page.results) || [];
   const totalReviews = data?.pages[0].total_results || 0;
 
-  const isFirstLoading = shouldLoad && status === 'pending';
-  const isError = status === 'error';
-  const isReady = shouldLoad && !isError && !isFirstLoading;
-  const hasResults = reviewResults.length > 0;
+  const hasResults = reviewList.length > 0;
+  const shouldHide = isError || (isSuccess && !hasResults);
 
   useEffect(() => {
     if (isError) {
@@ -81,15 +81,15 @@ export default function ReviewSlider({ title, movieId }: ReviewSliderProps) {
         error,
       );
     }
-  }, [error, isError]);
+  }, [isError]);
 
   useEffect(() => {
-    if (isReady && !hasResults) {
+    if (isSuccess && !hasResults) {
       console.warn(
         `[ReviewSlider] Empty review array returned for movie ID ${movieId}`,
       );
     }
-  }, [isReady, hasResults]);
+  }, [isSuccess, hasResults]);
 
   async function handleReachEnd() {
     if (isFetchingNextPage || !hasNextPage) return;
@@ -97,12 +97,9 @@ export default function ReviewSlider({ title, movieId }: ReviewSliderProps) {
   }
 
   return (
-    <section
-      ref={triggerRef}
-      className={isReady && !hasResults ? 'hidden' : ''}
-    >
-      {isFirstLoading && <ReviewSliderSkeleton />}
-      {isReady && hasResults && (
+    <section className={shouldHide ? 'hidden' : undefined} ref={triggerRef}>
+      {isPending && <ReviewSliderSkeleton />}
+      {hasResults && (
         <>
           <Headline as="h2" variant="h2" totalResults={totalReviews}>
             {title}
@@ -126,7 +123,7 @@ export default function ReviewSlider({ title, movieId }: ReviewSliderProps) {
               }}
               onReachEnd={handleReachEnd}
             >
-              {reviewResults.map((review, index) => (
+              {reviewList.map((review, index) => (
                 <SwiperSlide
                   key={`${review.id}-${index}`}
                   className="px-6 py-6 rounded-2xl bg-surface-container"

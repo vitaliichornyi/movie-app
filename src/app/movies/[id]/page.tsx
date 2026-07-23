@@ -31,7 +31,7 @@ export default function MoviePage({
 }) {
   const { id } = React.use(params);
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isPending, isError, isSuccess } = useQuery({
     queryKey: ['movie', id],
     queryFn: () => fetchMovieDetailsByID(id),
   });
@@ -39,9 +39,9 @@ export default function MoviePage({
   return (
     <main className="grow">
       <>
-        {isLoading && <LoadingContainer />}
-        {error && <StatusMessage type="error" />}
-        {data && !isLoading && !error && (
+        {isPending && <LoadingContainer />}
+        {isError && <StatusMessage type="error" />}
+        {isSuccess && (
           <>
             <HeroImage
               title={data.title}

@@ -36,27 +36,32 @@ export default function RelatedMovies({
   const [shouldLoad, setShouldLoad] = useState(false);
   const [triggerRef] = useIntersectionObserver(() => setShouldLoad(true));
 
-  const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ['relatedMovies', type, movieId],
-      queryFn: ({ pageParam }) => fetchMovieList(movieId, type, pageParam),
-      enabled: shouldLoad,
+  const {
+    data,
+    isPending,
+    isError,
+    isSuccess,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['relatedMovies', type, movieId],
+    queryFn: ({ pageParam }) => fetchMovieList(movieId, type, pageParam),
+    enabled: shouldLoad,
 
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, _allPages, lastPageParam) => {
-        if (lastPageParam < lastPage.total_pages) {
-          return lastPageParam + 1;
-        }
-        return undefined;
-      },
-    });
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+      if (lastPageParam < lastPage.total_pages) {
+        return lastPageParam + 1;
+      }
+      return undefined;
+    },
+  });
 
-  const items = data?.pages.flatMap((page) => page.results) || [];
+  const movieList = data?.pages.flatMap((page) => page.results) || [];
 
-  const isFirstLoading = status === 'pending';
-  const isError = status === 'error';
-  const hasMovie = items && items.length > 0;
-  const isReady = shouldLoad && !isError && !isFirstLoading;
+  const hasMovie = movieList.length > 0;
+  const shouldHide = isError || (isSuccess && !hasMovie);
 
   async function handleReachEnd() {
     if (isFetchingNextPage || !hasNextPage) return;
@@ -64,11 +69,11 @@ export default function RelatedMovies({
   }
 
   return (
-    <section className={isReady && !hasMovie ? 'hidden' : ''} ref={triggerRef}>
-      {isFirstLoading && <MovieSliderSkeleton />}
-      {isReady && hasMovie && (
+    <section className={shouldHide ? 'hidden' : undefined} ref={triggerRef}>
+      {isPending && <MovieSliderSkeleton />}
+      {hasMovie && (
         <MovieSlider
-          items={items}
+          items={movieList}
           title={title}
           hasNextPage={hasNextPage}
           fetchNextPage={handleReachEnd}

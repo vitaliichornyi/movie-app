@@ -25,7 +25,7 @@ async function fetchCollection(slug: string): Promise<MovieExtended[]> {
 }
 
 export default function HeroSlider({ slug }: { slug: string }) {
-  const { data, isLoading, error } = useQuery({
+  const { data, isPending, isError, isSuccess } = useQuery({
     queryKey: ['hero-slider', slug],
     queryFn: () => fetchCollection(slug),
   });
@@ -33,15 +33,14 @@ export default function HeroSlider({ slug }: { slug: string }) {
   const [prevEl, setPrevEl] = useState<HTMLButtonElement | null>(null);
   const [nextEl, setNextEl] = useState<HTMLButtonElement | null>(null);
 
-  const isReady = !isLoading;
   const hasData = data && data.length > 0;
-  const hasIssue = error || !hasData;
+  const hasNoData = isError || (isSuccess && !hasData);
 
   return (
     <section>
-      {isLoading && <HeroSliderSkeleton />}
-      {isReady && hasIssue && <HeroSliderFallback />}
-      {isReady && hasData && (
+      {isPending && <HeroSliderSkeleton />}
+      {hasNoData && <HeroSliderFallback />}
+      {hasData && (
         <div className="relative w-full">
           <SliderNavButton btnRef={setPrevEl} direction="prev" heroSlider />
           <SliderNavButton btnRef={setNextEl} direction="next" heroSlider />
@@ -60,7 +59,7 @@ export default function HeroSlider({ slug }: { slug: string }) {
               prevEl,
               nextEl,
             }}
-            slidesPerView={hasIssue ? 1 : 'auto'}
+            slidesPerView={hasNoData ? 1 : 'auto'}
             spaceBetween={24}
             loop={true}
             centeredSlides={true}

@@ -1,11 +1,8 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-
-import LoadingContainer from './LoadingContainer';
-import StatusMessage from './StatusMessage';
-import MovieCollection from './MovieCollection';
-
 import { Collection } from '../types/collections';
+import LoadingContainer from './LoadingContainer';
+import MovieCollection from './MovieCollection';
 
 async function fetchCollections(): Promise<Collection[]> {
   const response = await fetch('/api/collections');
@@ -19,7 +16,7 @@ async function fetchCollections(): Promise<Collection[]> {
 }
 
 export default function MovieCollectionGrid() {
-  const { data, isLoading, error } = useQuery({
+  const { data, isPending, isError, isSuccess } = useQuery({
     queryKey: ['collections'],
     queryFn: fetchCollections,
 
@@ -32,22 +29,26 @@ export default function MovieCollectionGrid() {
   });
 
   const hasData = data && data.length > 0;
-  const isReady = !isLoading && !error;
+  const shouldHide = isError || (isSuccess && !hasData);
+
+  if (shouldHide) {
+    return null;
+  }
 
   return (
-    <div className="layout-wrap">
-      {isLoading && <LoadingContainer />}
-      {error && <StatusMessage type="error" />}
-      {isReady && !hasData && <StatusMessage type="empty" />}
-      {isReady &&
-        hasData &&
-        data.map((collection) => (
-          <MovieCollection
-            key={collection.id}
-            slug={collection.slug}
-            title={collection.title}
-          />
-        ))}
-    </div>
+    <>
+      {isPending && <LoadingContainer />}
+      {hasData && (
+        <div className="layout-wrap">
+          {data.map((collection) => (
+            <MovieCollection
+              key={collection.id}
+              slug={collection.slug}
+              title={collection.title}
+            />
+          ))}
+        </div>
+      )}
+    </>
   );
 }

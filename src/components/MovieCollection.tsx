@@ -16,12 +16,10 @@ async function fetchMovieCollection(
   const response = await fetch(
     `/api/collections/${slug}?page=${pageParam}&limit=${limit}`,
   );
-
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData.error || 'Unknown error');
   }
-
   const data = await response.json();
   return data;
 }
@@ -36,20 +34,27 @@ export default function MovieCollection({
   const [shouldLoad, setShouldLoad] = useState(false);
   const [triggerRef] = useIntersectionObserver(() => setShouldLoad(true));
 
-  const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ['collectionItems', slug],
-      queryFn: ({ pageParam }) => fetchMovieCollection(slug, pageParam),
-      enabled: shouldLoad,
+  const {
+    data,
+    isPending,
+    isError,
+    isSuccess,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['collectionItems', slug],
+    queryFn: ({ pageParam }) => fetchMovieCollection(slug, pageParam),
+    enabled: shouldLoad,
 
-      initialPageParam: 0,
-      getNextPageParam: (lastPage, _allPages, lastPageParam) => {
-        if (lastPage.isLastPage) return undefined;
-        return lastPageParam + 1;
-      },
-    });
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+      if (lastPage.isLastPage) return undefined;
+      return lastPageParam + 1;
+    },
+  });
 
-  const collectionItems =
+  const collection =
     data?.pages
       .flatMap((page) => page.data)
       .filter((item) => item !== null)
@@ -58,10 +63,8 @@ export default function MovieCollection({
         genre_ids: movie.genres ? movie.genres.map((g) => g.id) : [],
       })) || [];
 
-  const isFirstLoading = status === 'pending';
-  const isError = status === 'error';
-  const hasMovie = collectionItems && collectionItems.length > 0;
-  const isReady = shouldLoad && !isError && !isFirstLoading;
+  const hasCollection = collection.length > 0;
+  const shouldHide = isError || (isSuccess && !hasCollection);
 
   async function handleReachEnd() {
     if (isFetchingNextPage || !hasNextPage) return;
@@ -69,11 +72,11 @@ export default function MovieCollection({
   }
 
   return (
-    <section className={isReady && !hasMovie ? 'hidden' : ''} ref={triggerRef}>
-      {isFirstLoading && <MovieSliderSkeleton />}
-      {isReady && hasMovie && (
+    <section className={shouldHide ? 'hidden' : undefined} ref={triggerRef}>
+      {isPending && <MovieSliderSkeleton />}
+      {hasCollection && (
         <MovieSlider
-          items={collectionItems}
+          items={collection}
           title={title}
           hasNextPage={hasNextPage}
           isFetchingNextPage={isFetchingNextPage}

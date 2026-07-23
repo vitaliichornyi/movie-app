@@ -57,31 +57,28 @@ export default function Movies() {
     fetchNextPage();
   });
 
-  const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ['movies', filters],
-      queryFn: ({ pageParam }) => fetchMovies(pageParam, filters),
-      initialPageParam: 1,
+  const {
+    data,
+    isPending,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['movies', filters],
+    queryFn: ({ pageParam }) => fetchMovies(pageParam, filters),
+    initialPageParam: 1,
 
-      getNextPageParam: (lastPage) => {
-        if (lastPage.page < lastPage.total_pages) {
-          return lastPage.page + 1;
-        }
-        return undefined;
-      },
-    });
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.total_pages) {
+        return lastPage.page + 1;
+      }
+      return undefined;
+    },
+  });
 
-  const rawMovies = data?.pages.flatMap((page) => page.results) || [];
-
-  const allMovies = rawMovies.filter(
-    (movie, index, self) =>
-      self.findIndex((m) => m?.id === movie?.id) === index,
-  );
-
-  const isFirstLoading = status === 'pending';
-  const isError = status === 'error';
-  const hasMovie = allMovies.length > 0;
-  const emptyResponse = !hasMovie && !isError && !isFirstLoading;
+  const movieList = data?.pages.flatMap((page) => page.results) || [];
+  const hasMovies = movieList.length > 0;
 
   return (
     <main className="layout-wrap grow">
@@ -91,13 +88,13 @@ export default function Movies() {
       </Headline>
       <FilterBar filters={filters} onFilterChange={updateFilter} />
       <section>
-        {isFirstLoading && <MoviesSkeleton />}
+        {isPending && <MoviesSkeleton />}
         {isError && <StatusMessage type="error" />}
-        {emptyResponse && <StatusMessage type="empty" />}
-        {hasMovie && (
+        {!hasMovies && <StatusMessage type="empty" />}
+        {hasMovies && (
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-              {allMovies.map((movie, index) => (
+              {movieList.map((movie, index) => (
                 <PosterImage
                   key={movie.id}
                   index={index}
