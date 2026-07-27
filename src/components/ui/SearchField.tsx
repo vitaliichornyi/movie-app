@@ -1,4 +1,6 @@
+'use client';
 import { useEffect, useRef } from 'react';
+import { useBlurOnScroll } from '@/src/hooks/useBlurOnScroll';
 
 import SearchIcon from '@/src/icons/SearchIcon';
 import IconButton from './IconButton';
@@ -15,6 +17,8 @@ export default function SearchField({
   value,
   onChange,
 }: SearchFieldProps) {
+  useBlurOnScroll();
+
   const inputRef = useRef<HTMLInputElement>(null);
   const isFilled = value !== '';
 
