@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import useIntersectionObserver from '@/src/hooks/useIntersectionObserver';
-
+import { Suspense } from 'react';
 import FilterBar from '@/src/components/FilterBar';
 import MoviesSkeleton from '@/src/components/skeletons/MoviesSkeleton';
 import StatusMessage from '@/src/components/StatusMessage';
@@ -33,7 +33,7 @@ async function fetchMovies(
   return data;
 }
 
-export default function Movies() {
+function MoviesContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -123,5 +123,13 @@ export default function Movies() {
         )}
       </section>
     </main>
+  );
+}
+
+export default function Movies() {
+  return (
+    <Suspense fallback={<MoviesSkeleton />}>
+      <MoviesContent />
+    </Suspense>
   );
 }

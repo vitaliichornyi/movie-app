@@ -22,7 +22,7 @@ export default function HeroSliderFallback() {
           <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/64 via-40% to-black/20" />
         </div>
         <div className="layout-wrap flex flex-col items-center justify-end w-full h-full pb-10">
-          <Headline as="h1" variant="title2">
+          <Headline as="h1" variant="title1">
             Ready to Start Watching?
           </Headline>
           <p className="text-center text-lg font-medium">
