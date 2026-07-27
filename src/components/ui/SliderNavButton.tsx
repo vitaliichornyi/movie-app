@@ -18,14 +18,14 @@ export default function SliderNavButton({
     <button
       type="button"
       ref={btnRef}
-      className={`absolute flex items-center justify-center h-full w-4 md:w-12 top-0 text-on-surface-variant hover:text-on-surface disabled:opacity-0 cursor-pointer z-10
+      className={`absolute flex items-center justify-center h-full w-8 md:w-12 top-0 text-on-surface-variant hover:text-on-surface disabled:opacity-0 cursor-pointer z-10
         ${isPrev ? 'left-0' : 'right-0'}
         ${
           heroSlider
             ? 'translate-x-0 -translate-y-5'
             : isPrev
-              ? '-translate-x-4 md:-translate-x-12'
-              : 'translate-x-4 md:translate-x-12'
+              ? 'bg-linear-to-r from-black/60 to-transparent md:-translate-x-12'
+              : 'bg-linear-to-l from-black/60 to-transparent md:translate-x-12'
         }
         `}
     >
