@@ -4,7 +4,7 @@ A web application for browsing and discovering movies powered by the TMDb API.
 
 <img width="800" height="418" alt="ezgif-89232c32263c2c5f" src="https://github.com/user-attachments/assets/4709c1fc-c20f-46c2-ba6b-d6503cc2d056" />
 
-**Live Demo:** https://bit.ly/4foJ03r
+**Live Demo:** [Link](https://movie-app-iota-eight-38.vercel.app/)
 
 The main goal of this project was to build an interface focused on the deep elaboration of UX and edge cases, along with high attention to UI details.
 
