@@ -42,8 +42,10 @@ export default function HeroSlider({ slug }: { slug: string }) {
       {hasNoData && <HeroSliderFallback />}
       {hasData && (
         <div className="relative w-full">
-          <SliderNavButton btnRef={setPrevEl} direction="prev" heroSlider />
-          <SliderNavButton btnRef={setNextEl} direction="next" heroSlider />
+          <div className="hidden md:flex">
+            <SliderNavButton btnRef={setPrevEl} direction="prev" heroSlider />
+            <SliderNavButton btnRef={setNextEl} direction="next" heroSlider />
+          </div>
           <Swiper
             className="w-full h-140 [&_.swiper-slide]:opacity-40 [&_.swiper-slide]:transition-opacity [&_.swiper-slide-active]:opacity-100"
             style={
