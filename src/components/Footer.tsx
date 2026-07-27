@@ -1,4 +1,6 @@
+'use client';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import Logo from './ui/Logo';
 import FacebookIcon from '../icons/socialmedia/FacebookIcon';
@@ -7,6 +9,12 @@ import InstagramIcon from '../icons/socialmedia/InstagramIcon';
 import ThreadsIcon from '../icons/socialmedia/ThreadsIcon';
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === '/search') {
+    return null;
+  }
+
   return (
     <footer className="layout-wrap flex flex-col md:flex-row justify-between items-center gap-6 py-20">
       <Logo size="sm" />
