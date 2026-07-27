@@ -218,18 +218,20 @@ export default function SearchResultsProvider({
                 />
               ))}
             </div>
-            <div ref={triggerRef} className="my-6">
-              <Button
-                type="secondary"
-                size="lg"
-                maxWidth
-                onClick={fetchNextPage}
-                isDisabled={!hasNextPage}
-                isLoading={isFetchingNextPage}
-              >
-                Load more
-              </Button>
-            </div>
+            {hasNextPage && (
+              <div ref={triggerRef} className="my-6">
+                <Button
+                  type="secondary"
+                  size="lg"
+                  maxWidth
+                  onClick={fetchNextPage}
+                  isDisabled={!hasNextPage}
+                  isLoading={isFetchingNextPage}
+                >
+                  Load more
+                </Button>
+              </div>
+            )}
           </>
         )}
       </section>
